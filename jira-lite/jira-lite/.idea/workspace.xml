@@ -4,28 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1848bf9-9361-4765-941f-db9d445696ae" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/InvitationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/InvitationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/AuthRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/AuthRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/InvitationToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/InvitationToken.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/InvitationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/InvitationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/UserDetailsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/resources/db/changelog/db.changelog-master.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/resources/db/changelog/db.changelog-master.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/register/register.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/register/register.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/register/register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/register/register.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/users/users.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/users/users.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/users/users.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/users/users.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/services/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/services/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/services/user.service.ts" afterDir="false" />
-    </list>
+    <list default="true" id="d1848bf9-9361-4765-941f-db9d445696ae" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -117,7 +96,7 @@
       <option name="presentableId" value="Default" />
       <updated>1778071699353</updated>
       <workItem from="1778071700235" duration="2933000" />
-      <workItem from="1778151423820" duration="11366000" />
+      <workItem from="1778151423820" duration="11966000" />
     </task>
     <servers />
   </component>
