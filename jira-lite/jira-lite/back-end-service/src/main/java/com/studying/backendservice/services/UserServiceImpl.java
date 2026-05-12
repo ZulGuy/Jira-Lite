@@ -6,6 +6,7 @@ import com.studying.backendservice.models.User;
 import com.studying.backendservice.repositories.PasswordResetTokenRepository;
 import com.studying.backendservice.repositories.UserRepository;
 import com.studying.backendservice.utils.Role;
+import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public List<UserDTO> searchUsers(String query) {
     return userRepository.findByUsernameContainingIgnoreCase(query)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found"))
         .stream()
         .map(this::toDto)
         .collect(Collectors.toList());
@@ -57,8 +59,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<User> getAllUsers() {
-    return userRepository.findAll();
+  public List<UserDTO> getAllUsers() {
+    return userRepository.findAll()
+        .stream()
+        .map(this::toDto)
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -67,6 +72,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  @Transactional
   public void update(UserDTO user) {
     User updatedUser = userRepository.findById(user.getId()).orElseThrow();
     updatedUser.setUsername(user.getName());
@@ -101,7 +107,7 @@ public class UserServiceImpl implements UserService {
     user.setEnabled(true);
     user.setRole(Role.ROLE_USER);
     user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-    user.setTenant(tennantService.getTennantByName(userDto.getTennant()));
+    user.setTenant(userDto.getTennant());
     userRepository.save(user);
   }
 
@@ -113,11 +119,14 @@ public class UserServiceImpl implements UserService {
     dto.setEmail(user.getEmail());
     dto.setActive(user.isEnabled());
     dto.setRole(user.getRole());
+    dto.setTennant(user.getTenant());
     return dto;
   }
 
+  @Transactional
   public UserDTO toggleActive(int id) {
-    User user = userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    User user = userRepository.findById(id)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     user.setEnabled(!user.isEnabled());
     userRepository.save(user);
     return toDto(user);

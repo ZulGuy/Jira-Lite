@@ -43,13 +43,12 @@ public class User implements UserDetails {
   @Column(name = "role", nullable = false)
   private Role role;
 
-  @ManyToOne()
-  @JoinColumn(name = "tenant_id", referencedColumnName = "tennants.id", nullable = false)
+  @Column(name = "tenant_name", nullable = false)
   @Pattern(
       regexp = "^[a-zA-Z0-9_]*$",
-      message = "Tenant ID can only contain letters, numbers, and underscores."
+      message = "Tenant name can only contain letters, numbers, and underscores."
   )
-  private Tennant tenant;
+  private String tenant;
 
   public User(String email, String password, String username) {
     this.email = email;
@@ -57,7 +56,7 @@ public class User implements UserDetails {
     this.username = username;
   }
 
-  public User(String email, String password, String username, Tennant tenant, Role role) {
+  public User(String email, String password, String username, String tenant, Role role) {
     this.email = email;
     this.password = password;
     this.username = username;
@@ -120,11 +119,11 @@ public class User implements UserDetails {
   @Column(name = "active", nullable = false)
   private boolean active = true;
 
-  public Tennant getTenant() {
+  public String getTenant() {
     return tenant;
   }
 
-  public void setTenant(Tennant tenant) {
+  public void setTenant(String tenant) {
     this.tenant = tenant;
   }
 

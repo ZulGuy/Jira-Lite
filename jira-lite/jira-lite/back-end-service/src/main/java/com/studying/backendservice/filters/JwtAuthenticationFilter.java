@@ -15,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -51,8 +52,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return;
       }
 
-      if (username != null && username.contains("@")) {
-        setTenant(resolveTenantId(username));
+      String tenant = jwtService.extractAllClaims(jwt).get("tennantId", String.class);
+
+      if (tenant != null) {
+        setTenant(tenant);
       } else {
         TenantContext.setTenantId("public");
       }
@@ -68,7 +71,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authToken);
           }
-        } catch (org.springframework.security.core.userdetails.UsernameNotFoundException e) {
+        } catch (UsernameNotFoundException e) {
           filterChain.doFilter(request, response);
           return;
         }
@@ -89,11 +92,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       }
     }
     return null;
-  }
-
-  private String resolveTenantId(String login) {
-    int at = login.indexOf('@');
-    return (at > 0) ? login.substring(at + 1) : "public";
   }
 
   @Autowired

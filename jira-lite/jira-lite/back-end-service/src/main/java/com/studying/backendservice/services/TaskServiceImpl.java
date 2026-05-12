@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -35,6 +36,7 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<Task> getTasksForProject(int projectId) {
     Project project = projectRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found"));
@@ -78,6 +80,7 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
+  @Transactional(readOnly = true)
   public List<Task> getTasksByTaskTypeName(String name) {
     TaskType taskType = this.taskTypeService.getTaskTypeByName(name);
     return taskType.getTasks();

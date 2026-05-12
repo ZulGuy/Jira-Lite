@@ -9,7 +9,7 @@ public interface UserService {
   List<UserDTO> searchUsers(String query);
   UserDTO getUserById(int id);
   void save(UserDTO user);
-  List<User> getAllUsers();
+  List<UserDTO> getAllUsers();
   void delete(int id);
   void update(UserDTO user);
   UserDTO toDto(User user);

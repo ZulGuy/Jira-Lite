@@ -4,10 +4,12 @@ import com.studying.backendservice.configurations.SchemaTenantIdentifierResolver
 import com.studying.backendservice.configurations.TenantContext;
 import com.studying.backendservice.dto.AuthRequest;
 import com.studying.backendservice.dto.AuthResponse;
+import com.studying.backendservice.dto.UserDTO;
 import com.studying.backendservice.models.User;
 import com.studying.backendservice.repositories.UserRepository;
 import com.studying.backendservice.services.JwtService;
 import com.studying.backendservice.services.TennantServiceImpl;
+import com.studying.backendservice.services.UserService;
 import com.studying.backendservice.utils.Role;
 import java.util.HashMap;
 import java.util.List;
@@ -32,11 +34,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+
   private final AuthenticationManager authenticationManager;
   private final JwtService jwtService;
-  private final UserRepository userRepository;
+  private final UserService userService;
   public SchemaTenantIdentifierResolver schemaTenantIdentifierResolver;
-  private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+  private final PasswordEncoder passwordEncoder;
 
   private final TennantServiceImpl tennantService;
 
@@ -46,19 +49,21 @@ public class AuthController {
   @Autowired
   public AuthController(
       AuthenticationManager authenticationManager, JwtService jwtService,
-      UserRepository userRepository, SchemaTenantIdentifierResolver schemaTenantIdentifierResolver, TennantServiceImpl tennantService) {
+      UserService userService, SchemaTenantIdentifierResolver schemaTenantIdentifierResolver,
+      TennantServiceImpl tennantService, PasswordEncoder passwordEncoder) {
     this.authenticationManager = authenticationManager;
     this.jwtService = jwtService;
-    this.userRepository = userRepository;
+    this.userService = userService;
     this.schemaTenantIdentifierResolver = schemaTenantIdentifierResolver;
     this.tennantService = tennantService;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @PostMapping(value = "/login",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
-    String tenant = resolveTenantId(request.getEmail());
+    String tenant = userService.searchUsers(request.email).getFirst().getTennant();
     setTenant(tenant);
     schemaTenantIdentifierResolver.resolveCurrentTenantIdentifier();
     System.out.println("request login" + request.email + request.password);
@@ -69,7 +74,7 @@ public class AuthController {
     System.out.println("request login" + request.email + request.password);
     var user = (User) authentication.getPrincipal();
     Map<String, Object> claims = new HashMap<>();
-    claims.put("tennantId", user.getTenant().getName());
+    claims.put("tennantId", user.getTenant());
     claims.put("role", user.getAuthorities());
     String token = jwtService.generateToken(claims, user);
     ResponseCookie jwtCookie = ResponseCookie.from("jwt", token)
@@ -105,7 +110,8 @@ public class AuthController {
     setTenant("public");
     schemaTenantIdentifierResolver.resolveCurrentTenantIdentifier();
 
-    if (userRepository.findByUsername(request.getEmail()).isPresent()) {
+    //Change the comparison logic because now may cause bugs
+    if (userService.searchUsers(request.getEmail()) != null) {
       return ResponseEntity.badRequest().body("Username already exists");
     }
 
@@ -114,17 +120,12 @@ public class AuthController {
     newUser.setEmail(request.getEmail());
     newUser.setPassword(passwordEncoder.encode(request.getPassword()));
     newUser.setRole(Role.ROLE_USER);
-    newUser.setTenant(tennantService.getTennantByName("public"));
+    newUser.setTenant("public");
     newUser.setEnabled(true);
+    UserDTO dto = userService.toDto(newUser);
 
-    userRepository.save(newUser);
+    userService.save(dto);
     return ResponseEntity.ok("User registered successfully");
-  }
-
-
-  private String resolveTenantId(String login) {
-    int at = login.indexOf('@');
-    return (at > 0) ? login.substring(at + 1) : "public";
   }
 
   public List<String> getAllTenantSchemas() {

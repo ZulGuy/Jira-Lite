@@ -26,8 +26,8 @@ public class NavigationController {
 
   @PostMapping("/login")
   public String login(@ModelAttribute AuthRequest request, Model model) {
-    if (request.getUsername() != null && request.getUsername().contains("@")) {
-      TenantContext.setTenantId(resolveTenantId(request.getUsername()));
+    if (request.getEmail() != null && request.getEmail().contains("@")) {
+      TenantContext.setTenantId(resolveTenantId(request.getEmail()));
     } else {
       TenantContext.setTenantId("public");
     }

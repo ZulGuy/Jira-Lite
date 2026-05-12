@@ -45,6 +45,7 @@ public class ProjectUserServiceImpl implements ProjectUserService {
   }
 
   @Override
+  @Transactional
   public void addUserToProject(int projectId, AddUserToProjectDTO dto) {
     if (projectUserRepository.existsByUserIdAndProjectId(dto.getUserId(), projectId)) {
       throw new IllegalStateException("Користувач вже доданий до цього проєкту.");

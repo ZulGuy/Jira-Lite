@@ -23,6 +23,7 @@ export interface UserDTO {
   email: string;
   active: boolean;
   role: Role;
+  tenant: TenantDTO;
 }
 
 export interface CommentDTO {
@@ -55,5 +56,12 @@ export interface CustomFieldDTO {
   name: string;
   value?: string;
   type: FieldType;
+}
+
+export interface TenantDTO {
+  id: string;
+  name: string;
+  status: string;
+  admin: UserDTO;
 }
 

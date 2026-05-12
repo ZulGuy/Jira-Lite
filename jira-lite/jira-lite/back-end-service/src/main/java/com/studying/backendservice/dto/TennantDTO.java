@@ -10,7 +10,7 @@ public class TennantDTO {
   private int id;
   private String name;
   private boolean status;
-  private String admin;
+  private int adminId;
 
   public int getId() {
     return id;
@@ -36,11 +36,11 @@ public class TennantDTO {
     this.status = status;
   }
 
-  public String getAdmin() {
-    return admin;
+  public int getAdminId() {
+    return adminId;
   }
 
-  public void setAdmin(String admin) {
-    this.admin = admin;
+  public void setAdminId(int adminId) {
+    this.adminId = adminId;
   }
 }

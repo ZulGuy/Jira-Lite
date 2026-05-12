@@ -26,7 +26,7 @@ export class UserService {
 
   // toggle active status
   toggleActive(id: number): Observable<UserDTO> {
-    return this.http.put<UserDTO>(`${this.api}/${id}/toggle-active`, {}, { withCredentials: true });
+    return this.http.patch<UserDTO>(`${this.api}/${id}/toggle-active`, {}, { withCredentials: true });
   }
 
   createUser(user: UserDTO): Observable<UserDTO> {

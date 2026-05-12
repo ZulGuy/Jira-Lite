@@ -48,6 +48,7 @@ public class PasswordResetService {
         .isPresent();
   }
 
+  @Transactional
   public void resetPassword(String token, String newPassword) {
     PasswordResetToken resetToken = tokenRepo.findByToken(token)
         .orElseThrow(() -> new IllegalArgumentException("Invalid token"));

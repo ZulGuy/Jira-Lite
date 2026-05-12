@@ -6,6 +6,7 @@ import com.studying.backendservice.repositories.CommentRepository;
 import com.studying.backendservice.repositories.ProjectRepository;
 import com.studying.backendservice.repositories.ProjectUserRepository;
 import com.studying.backendservice.repositories.TaskRepository;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,7 @@ public class ProjectServiceImpl implements ProjectService {
   }
 
   @Override
+  @Transactional
   public void updateProject(int id, ProjectDTO project) {
     Project updatedProject = projectRepository.findById(id).orElseThrow();
     updatedProject.setName(project.getName());

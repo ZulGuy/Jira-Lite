@@ -21,13 +21,12 @@ public class Tennant {
   private String name;
   @Column(name = "status", nullable = false)
   private boolean status = true;
-  @OneToOne
-  @JoinColumn(name = "admin_id")
-  private User admin;
+  @Column(name = "admin_id", nullable = false)
+  private int adminId;
 
-  public Tennant(String name, User admin) {
+  public Tennant(String name, int adminId) {
     this.name = name;
-    this.admin = admin;
+    this.adminId = adminId;
   }
 
   public Tennant() {}
@@ -56,11 +55,11 @@ public class Tennant {
     this.status = status;
   }
 
-  public User getAdmin() {
-    return admin;
+  public int getAdminId() {
+    return adminId;
   }
 
-  public void setAdmin(User admin) {
-    this.admin = admin;
+  public void setAdminId(int adminId) {
+    this.adminId = adminId;
   }
 }

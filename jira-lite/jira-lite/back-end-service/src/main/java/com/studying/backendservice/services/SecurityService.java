@@ -8,6 +8,7 @@ import com.studying.backendservice.repositories.ProjectRepository;
 import com.studying.backendservice.repositories.ProjectUserRepository;
 import com.studying.backendservice.repositories.TaskRepository;
 import com.studying.backendservice.utils.ProjectRole;
+import jakarta.transaction.Transactional;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,7 @@ public class SecurityService {
         .orElse(false);
   }
 
+  @Transactional
   public boolean isAdminOrEditorByCommentId(int commentId) {
     UserDTO user = userService.getCurrentUser();
     if (user == null) return false;
@@ -79,6 +81,7 @@ public class SecurityService {
         .orElse(false);
   }
 
+  @Transactional
   public boolean isAdminOrEditorByTaskId(int taskId) {
     UserDTO user = userService.getCurrentUser();
     if (user == null) return false;

@@ -4,6 +4,7 @@ import com.studying.backendservice.dto.CommentDTO;
 import com.studying.backendservice.models.Comment;
 import com.studying.backendservice.repositories.CommentRepository;
 import com.studying.backendservice.repositories.TaskRepository;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class CommentServiceImpl implements CommentService {
     this.emailService = emailService;
   }
 
+  @Transactional
   @Override
   public Comment addComment(Comment comment) {
     emailService.sendNewCommentNotification(comment.getTask(), comment);
@@ -39,6 +41,7 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
+  @Transactional
   public void updateComment(int id, CommentDTO updatedComment) {
     Comment existing = commentRepository.findById(id).orElseThrow();
     existing.setDescription(updatedComment.getDescription());

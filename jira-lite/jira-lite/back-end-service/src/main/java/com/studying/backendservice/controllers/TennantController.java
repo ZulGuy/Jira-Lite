@@ -1,11 +1,9 @@
 package com.studying.backendservice.controllers;
 
 import com.studying.backendservice.dto.TennantDTO;
-import com.studying.backendservice.dto.UserDTO;
-import com.studying.backendservice.models.Tennant;
-import com.studying.backendservice.models.User;
 import com.studying.backendservice.services.TennantService;
 import com.studying.backendservice.services.UserService;
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,13 +29,19 @@ public class TennantController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Tennant>> getAllTennants() {
+  public ResponseEntity<List<TennantDTO>> getAllTennants() {
     return new ResponseEntity<>(tennantService.getAllTennants(), HttpStatus.OK);
   }
 
   @PostMapping
-  public ResponseEntity<Tennant> createTennant(String name) {
-    return new ResponseEntity<>(tennantService.createTennant(name, userService.getCurrentUser().getId()), HttpStatus.OK);
+  public ResponseEntity<TennantDTO> createTennant(String name) {
+    try {
+      TennantDTO tennantDTO = tennantService.createTennant(name,
+          userService.getCurrentUser().getId());
+      return new ResponseEntity<>(tennantDTO, HttpStatus.CREATED);
+    } catch (AccessDeniedException e) {
+      return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
   }
 
   @GetMapping("/{name}")

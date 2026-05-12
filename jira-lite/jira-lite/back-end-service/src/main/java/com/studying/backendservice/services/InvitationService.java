@@ -4,6 +4,7 @@ import com.studying.backendservice.models.InvitationToken;
 import com.studying.backendservice.repositories.InvitationTokenRepository;
 import com.studying.backendservice.repositories.UserRepository;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class InvitationService {
     this.userRepository = userRepository;
   }
 
+  @Transactional
   public void sendInvitation(String email) {
     if (userRepository.existsByEmail(email)) {
       throw new IllegalStateException("Користувач з таким email вже зареєстрований.");
@@ -66,6 +68,7 @@ public class InvitationService {
         .orElseThrow(() -> new IllegalArgumentException("Невалідний токен"));
   }
 
+  @Transactional
   public void markUsed(String token) {
     InvitationToken invitation = tokenRepo.findByToken(token)
         .orElseThrow(() -> new IllegalArgumentException("Невалідний токен"));
