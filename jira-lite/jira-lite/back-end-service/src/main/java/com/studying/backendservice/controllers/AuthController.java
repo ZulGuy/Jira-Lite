@@ -11,6 +11,7 @@ import com.studying.backendservice.services.JwtService;
 import com.studying.backendservice.services.TennantServiceImpl;
 import com.studying.backendservice.services.UserService;
 import com.studying.backendservice.utils.Role;
+import io.jsonwebtoken.Claims;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +24,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +42,6 @@ public class AuthController {
   private final AuthenticationManager authenticationManager;
   private final JwtService jwtService;
   private final UserService userService;
-  public SchemaTenantIdentifierResolver schemaTenantIdentifierResolver;
   private final PasswordEncoder passwordEncoder;
 
   private final TennantServiceImpl tennantService;
@@ -49,12 +52,10 @@ public class AuthController {
   @Autowired
   public AuthController(
       AuthenticationManager authenticationManager, JwtService jwtService,
-      UserService userService, SchemaTenantIdentifierResolver schemaTenantIdentifierResolver,
-      TennantServiceImpl tennantService, PasswordEncoder passwordEncoder) {
+      UserService userService, TennantServiceImpl tennantService, PasswordEncoder passwordEncoder) {
     this.authenticationManager = authenticationManager;
     this.jwtService = jwtService;
     this.userService = userService;
-    this.schemaTenantIdentifierResolver = schemaTenantIdentifierResolver;
     this.tennantService = tennantService;
     this.passwordEncoder = passwordEncoder;
   }
@@ -65,7 +66,6 @@ public class AuthController {
   public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
     String tenant = userService.searchUsers(request.email).getFirst().getTennant();
     setTenant(tenant);
-    schemaTenantIdentifierResolver.resolveCurrentTenantIdentifier();
     System.out.println("request login" + request.email + request.password);
     System.out.println("TenantContext: " + TenantContext.getTenantId());
     Authentication authentication = authenticationManager.authenticate(
@@ -108,7 +108,6 @@ public class AuthController {
   @PostMapping("/register")
   public ResponseEntity<String> register(@RequestBody AuthRequest request) {
     setTenant("public");
-    schemaTenantIdentifierResolver.resolveCurrentTenantIdentifier();
 
     //Change the comparison logic because now may cause bugs
     if (userService.searchUsers(request.getEmail()) != null) {
@@ -126,6 +125,46 @@ public class AuthController {
 
     userService.save(dto);
     return ResponseEntity.ok("User registered successfully");
+  }
+
+  @GetMapping("/switch-tenant")
+  public ResponseEntity<String> switchTenant() {
+    Map<String, Object> claimsMap = new HashMap<>();
+    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    claimsMap.put("role", user.getAuthorities());
+
+    if (TenantContext.getTenantId().equals("public")) {
+      UserDTO dto = userService.searchUsers(userService.getCurrentUser().getEmail()).getFirst();
+      if (dto.getTennant().equals("public")) {
+        return ResponseEntity.badRequest().body("User is not in any tennant");
+      }
+      claimsMap.put("tennantId", dto.getTennant());
+      setTenant(dto.getTennant());
+      String token = jwtService.generateToken(claimsMap, user);
+      ResponseCookie jwtCookie = ResponseCookie.from("jwt", token)
+          .httpOnly(true)
+          .secure(false)
+          .path("/")
+          .maxAge(24 * 60 * 60)
+          .sameSite("Lax")
+          .build();
+      return ResponseEntity.ok()
+          .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+          .body("Tenant switched to " + TenantContext.getTenantId());
+    }
+    claimsMap.put("tennantId", "public");
+    setTenant("public");
+    String token = jwtService.generateToken(claimsMap, user);
+    ResponseCookie jwtCookie = ResponseCookie.from("jwt", token)
+        .httpOnly(true)
+        .secure(false)
+        .path("/")
+        .maxAge(24 * 60 * 60)
+        .sameSite("Lax")
+        .build();
+    return ResponseEntity.ok()
+        .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+        .body("Tenant switched to " + TenantContext.getTenantId());
   }
 
   public List<String> getAllTenantSchemas() {

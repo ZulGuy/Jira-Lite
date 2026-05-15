@@ -1,5 +1,3 @@
-// src/app/types/api.types.ts
-
 export type ProjectRole = 'ADMIN' | 'EDITOR' | 'VIEWER';
 export type Role = 'ROLE_ADMIN' | 'ROLE_USER';
 
@@ -10,7 +8,7 @@ export interface ProjectDTO {
 }
 
 export interface ProjectUserDTO {
-  id: number;   // user id!
+  id: number;
   name: string;
   email: string;
   active: boolean;
@@ -23,7 +21,7 @@ export interface UserDTO {
   email: string;
   active: boolean;
   role: Role;
-  tenant: TenantDTO;
+  tenant: string;
 }
 
 export interface CommentDTO {
@@ -62,6 +60,6 @@ export interface TenantDTO {
   id: string;
   name: string;
   status: string;
-  admin: UserDTO;
+  adminId: number;
 }
 

@@ -5,4 +5,9 @@ import { Observable } from 'rxjs';
 import { TenantDTO } from '../types/api.types';
 
 @Injectable({providedIn: 'root'})
-export class TennantService {}
+export class TennantService {
+  private api = `${environment.apiUrl}/api/tenants`;
+
+  constructor(private http: HttpClient) {}
+}
+
