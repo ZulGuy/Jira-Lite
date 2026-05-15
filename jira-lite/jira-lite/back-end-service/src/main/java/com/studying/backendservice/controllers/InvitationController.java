@@ -1,5 +1,6 @@
 package com.studying.backendservice.controllers;
 
+import com.studying.backendservice.configurations.TenantContext;
 import com.studying.backendservice.dto.UserDTO;
 import com.studying.backendservice.services.InvitationService;
 import com.studying.backendservice.services.UserService;
@@ -47,7 +48,10 @@ public class InvitationController {
     String tennant = invitationService.getTennantByToken(token);
     payload.setTennant(tennant);
     payload.setEmail(email);
+    TenantContext.setTenantId(tennant);
     userService.register(payload);
+    TenantContext.setTenantId("public");
+    userService.update(payload);
     invitationService.markUsed(token);
 
     return ResponseEntity.ok("Користувача створено");

@@ -1,5 +1,6 @@
 package com.studying.backendservice.services;
 
+import com.studying.backendservice.configurations.TenantContext;
 import com.studying.backendservice.models.InvitationToken;
 import com.studying.backendservice.repositories.InvitationTokenRepository;
 import com.studying.backendservice.repositories.UserRepository;
@@ -14,12 +15,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class InvitationService {
+
   private final InvitationTokenRepository tokenRepo;
   private final JavaMailSender mailSender;
   private final UserRepository userRepository;
 
   @Autowired
-  public InvitationService(InvitationTokenRepository tokenRepo, JavaMailSender mailSender, UserRepository userRepository) {
+  public InvitationService(InvitationTokenRepository tokenRepo, JavaMailSender mailSender,
+      UserRepository userRepository) {
     this.tokenRepo = tokenRepo;
     this.mailSender = mailSender;
     this.userRepository = userRepository;
@@ -27,7 +30,8 @@ public class InvitationService {
 
   @Transactional
   public void sendInvitation(String email) {
-    if (userRepository.existsByEmail(email)) {
+    if (userRepository.existsByEmail(email) && userRepository.findByEmail(email).isPresent()
+        && !userRepository.findByEmail(email).get().getTenant().equals("public")) {
       throw new IllegalStateException("Користувач з таким email вже зареєстрований.");
     }
     if (tokenRepo.existsByEmailAndUsedFalse(email)) {
@@ -40,6 +44,7 @@ public class InvitationService {
     invitation.setToken(token);
     invitation.setExpiresAt(LocalDateTime.now().plusDays(2));
     invitation.setUsed(false);
+    invitation.setTennant(TenantContext.getTenantId());
 
     tokenRepo.save(invitation);
 
