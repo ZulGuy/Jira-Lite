@@ -30,87 +30,42 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaskController {
 
   private final TaskService taskService;
-  private final UserRepository userRepository;
-  private final TaskRepository taskRepository;
-  private final ProjectRepository projectRepository;
   private final EmailService emailService;
 
   @Autowired
-  public TaskController(TaskService taskService, UserRepository userRepository, TaskRepository taskRepository,
-      ProjectRepository projectRepository, EmailService emailService) {
+  public TaskController(TaskService taskService, EmailService emailService) {
     this.taskService = taskService;
-    this.userRepository = userRepository;
-    this.taskRepository = taskRepository;
-    this.projectRepository = projectRepository;
     this.emailService = emailService;
   }
 
   @PostMapping
   public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO dto, @AuthenticationPrincipal User userDetails) {
-    Task task = new Task();
-    task.setSummary(dto.getSummary());
-    task.setDescription(dto.getDescription());
-    task.setStatus(dto.getStatus());
 
-    if (dto.getAssigneeId() != null) {
-      task.setAssignee(userRepository.findById(dto.assigneeId).orElse(null));
-    }
-
-    if (dto.getInitiatorId() != null) {
-      task.setInitiator(userRepository.findById(dto.initiatorId).orElse(null));
-    }
-
-    if (dto.getProjectId() == null) {
-      throw new IllegalArgumentException("projectId is required");
-    }
-
-    Project project = projectRepository.findById(dto.getProjectId())
-        .orElseThrow(() -> new IllegalArgumentException(
-            "Project not found with id: " + dto.getProjectId()));
-
-    task.setProject(project);
-
-    Task createdTask = taskService.createTask(task);
+    TaskDTO createdTask = taskService.createTask(dto);
     emailService.sendTaskCreatedNotification(createdTask);
-
-    return ResponseEntity.ok(toDto(createdTask));
-  }
-
-  @GetMapping("/{id}")
-  public ResponseEntity<TaskDTO> getTask(@PathVariable int id) {
-    Task task = taskService.getTaskById(id);
-
-    TaskDTO dto = toDto(task);
-
-    // Comments to DTOs
-    dto.comments = task.getComments().stream().map(comment -> {
-      CommentDTO c = new CommentDTO();
-      c.setId(comment.getId());
-      c.setDescription(comment.getDescription());
-      c.setAuthorName(comment.getAuthor() != null ? comment.getAuthor().getUsername() : "Анонім");
-      return c;
-    }).toList();
 
     return ResponseEntity.ok(dto);
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<TaskDTO> getTask(@PathVariable int id) {
+    TaskDTO task = taskService.getTaskById(id);
+
+    task.setComments(task.getComments().stream().map(comment -> {
+      CommentDTO c = new CommentDTO();
+      c.setId(comment.getId());
+      c.setDescription(comment.getDescription());
+      c.setAuthorName(comment.getAuthorName() != null ? comment.getAuthorName() : "Анонім");
+      return c;
+    }).toList());
+
+    return ResponseEntity.ok(task);
+  }
+
   @PreAuthorize("@securityService.isAdminOrEditorByTaskId(#id)")
   @PutMapping("/{id}")
-  public ResponseEntity<Task> updateTask(@PathVariable int id, @RequestBody TaskDTO dto) {
-    Task task = taskService.getTaskById(id);
-    task.setSummary(dto.summary);
-    task.setDescription(dto.description);
-    task.setStatus(dto.status);
-
-    if (dto.getAssigneeId() != null) {
-      task.setAssignee(userRepository.findById(dto.assigneeId).orElse(null));
-    }
-
-    if (dto.getInitiatorId() != null) {
-      task.setInitiator(userRepository.findById(dto.initiatorId).orElse(null));
-    }
-
-    return ResponseEntity.ok(taskService.updateTask(task));
+  public ResponseEntity<TaskDTO> updateTask(@PathVariable int id, @RequestBody TaskDTO dto) {
+    return ResponseEntity.ok(taskService.updateTask(dto));
   }
 
   @PreAuthorize("@securityService.isAdminOrEditorByTaskId(#id)")
@@ -123,28 +78,9 @@ public class TaskController {
   @PreAuthorize("@securityService.canAccessProject(#projectId, principal)")
   @GetMapping("/project/{projectId}")
   public ResponseEntity<List<TaskDTO>> getTasksForProject(@PathVariable int projectId) {
-    List<TaskDTO> dtos = taskService.getTasksForProject(projectId).stream()
-        .map(this::toDto)
-        .toList();
-    return ResponseEntity.ok(dtos);
+    List<TaskDTO> tasks = taskService.getTasksForProject(projectId);
+    return ResponseEntity.ok(tasks);
   }
-  private TaskDTO toDto(Task task) {
-    TaskDTO dto = new TaskDTO();
-    dto.id = task.getId();
-    dto.summary = task.getSummary();
-    dto.description = task.getDescription();
-    dto.status = task.getStatus();
-    dto.projectId = task.getProject().getId();
 
-    if (task.getAssignee() != null) {
-      dto.assigneeId = task.getAssignee().getId();
-    }
-
-    if (task.getInitiator() != null) {
-      dto.initiatorId = task.getInitiator().getId();
-    }
-
-    return dto;
-  }
 
 }

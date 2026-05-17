@@ -31,6 +31,14 @@ public class Comment {
   @JsonBackReference
   private User author;
 
+  protected Comment() {}
+
+  public Comment(String description, User author, Task task) {
+    this.description = description;
+    this.author = author;
+    this.task = task;
+  }
+
   public String getDescription() {
     return description;
   }
@@ -43,23 +51,12 @@ public class Comment {
     return author;
   }
 
-  public void setAuthor(User author) {
-    this.author = author;
-  }
 
   public int getId() {
     return id;
   }
 
-  public void setId(int id) {
-    this.id = id;
-  }
-
   public Task getTask() {
     return task;
-  }
-
-  public void setTask(Task task) {
-    this.task = task;
   }
 }

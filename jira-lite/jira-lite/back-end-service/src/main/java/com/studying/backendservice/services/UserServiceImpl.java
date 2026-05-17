@@ -85,9 +85,8 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void save(UserDTO user) {
-    User userEntity = new User();
-    userEntity.setUsername(user.getName());
-    userEntity.setEmail(user.getEmail());
+    User userEntity = new User(user.getEmail(), user.getPassword(), user.getName(),
+        user.getTennant(), user.getRole());
     userRepository.save(userEntity);
   }
 
@@ -103,26 +102,16 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void register(UserDTO userDto) {
-    User user = new User();
-    user.setUsername(userDto.getName());
-    user.setEmail(userDto.getEmail());
+    User user = new User(userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()),
+        userDto.getName(), userDto.getTennant(), Role.ROLE_USER);
     user.setEnabled(true);
-    user.setRole(Role.ROLE_USER);
-    user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-    user.setTenant(userDto.getTennant());
     userRepository.save(user);
   }
 
   @Override
   public UserDTO toDto(User user) {
-    UserDTO dto = new UserDTO();
-    dto.setId(user.getId());
-    dto.setName(user.getUsername());
-    dto.setEmail(user.getEmail());
-    dto.setActive(user.isEnabled());
-    dto.setRole(user.getRole());
-    dto.setTennant(user.getTenant());
-    return dto;
+    return new UserDTO(user.getId(), user.getUsername(), user.getEmail(), user.isEnabled(), user.getRole(),
+        user.getPassword(), user.getTenant());
   }
 
   @Transactional

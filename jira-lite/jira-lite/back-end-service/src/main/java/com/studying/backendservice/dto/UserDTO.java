@@ -13,23 +13,23 @@ public class UserDTO {
 
   private String tennant;
 
-  public UserDTO() {
+  public UserDTO(int id, String name, String email, boolean active, Role role, String password,
+      String tennant) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.active = active;
+    this.role = role;
+    this.password = password;
+    this.tennant = tennant;
   }
 
   public int getId() {
     return id;
   }
 
-  public void setId(int id) {
-    this.id = id;
-  }
-
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public String getEmail() {
@@ -39,7 +39,6 @@ public class UserDTO {
   public void setEmail(String email) {
     this.email = email;
   }
-
   public boolean isActive() {
     return active;
   }
@@ -58,10 +57,6 @@ public class UserDTO {
 
   public String getPassword() {
     return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
   }
 
   public String getTennant() {

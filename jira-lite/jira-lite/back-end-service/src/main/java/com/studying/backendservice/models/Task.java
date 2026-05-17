@@ -27,11 +27,11 @@ import java.util.Set;
 
 
 @Entity
-@Table(name="tasks")
+@Table(name = "tasks")
 public class Task {
 
   @Id
-  @GeneratedValue(strategy= GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
   @ManyToOne
@@ -61,19 +61,25 @@ public class Task {
   @Column(name = "status", nullable = false)
   private Status status;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "task_type_id")
-  @JsonBackReference
-  private TaskType taskType;
 
-  private LocalDateTime createdAt = LocalDateTime.now();
+  @Column(name = "created_at")
+  private final LocalDateTime createdAt = LocalDateTime.now();
+
+  protected Task() {
+  }
+
+  public Task(String summary, String description, Project project, User assignee,
+      User initiator, Status status) {
+    this.summary = summary;
+    this.description = description;
+    this.project = project;
+    this.assignee = assignee;
+    this.initiator = initiator;
+    this.status = status;
+  }
 
   public int getId() {
     return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
   }
 
   public String getSummary() {
@@ -135,17 +141,5 @@ public class Task {
 
   public LocalDateTime getCreatedAt() {
     return createdAt;
-  }
-
-  public void setCreatedAt(LocalDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public TaskType getTaskType() {
-    return taskType;
-  }
-
-  public void setTaskType(TaskType taskType) {
-    this.taskType = taskType;
   }
 }

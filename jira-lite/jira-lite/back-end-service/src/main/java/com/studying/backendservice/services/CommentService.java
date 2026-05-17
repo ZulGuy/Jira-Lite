@@ -5,10 +5,11 @@ import com.studying.backendservice.models.Comment;
 import java.util.List;
 
 public interface CommentService {
-  Comment addComment(Comment comment);
-  List<Comment> getCommentsForTask(int taskId);
+  CommentDTO addComment(CommentDTO comment, int taskId);
+  List<CommentDTO> getCommentsForTask(int taskId);
   void deleteComment(int id);
   void updateComment(int id, CommentDTO updatedComment);
-  Comment getCommentById(int id);
+  CommentDTO getCommentById(int id);
+  CommentDTO toDto(Comment comment);
 
 }

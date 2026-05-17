@@ -50,11 +50,8 @@ public class User implements UserDetails {
   )
   private String tenant;
 
-  public User(String email, String password, String username) {
-    this.email = email;
-    this.password = password;
-    this.username = username;
-  }
+  @Column(name = "active", nullable = false)
+  private boolean active = true;
 
   public User(String email, String password, String username, String tenant, Role role) {
     this.email = email;
@@ -64,23 +61,15 @@ public class User implements UserDetails {
     this.role = role;
   }
 
-  public User() {
+  protected User() {
   }
 
   public int getId() {
     return id;
   }
 
-  public void setId(int id) {
-    this.id = id;
-  }
-
   public String getEmail() {
     return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
   }
 
   @Override
@@ -92,13 +81,13 @@ public class User implements UserDetails {
     return password;
   }
 
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
   @Override
   public String getUsername() {
     return this.username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
   }
 
   @Override
@@ -116,9 +105,6 @@ public class User implements UserDetails {
     return UserDetails.super.isCredentialsNonExpired();
   }
 
-  @Column(name = "active", nullable = false)
-  private boolean active = true;
-
   public String getTenant() {
     return tenant;
   }
@@ -132,15 +118,19 @@ public class User implements UserDetails {
 
   public void setEnabled(boolean enabled) { this.active = enabled; }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
   public Role getRole() {
     return role;
   }
 
   public void setRole(Role role) {
     this.role = role;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 }

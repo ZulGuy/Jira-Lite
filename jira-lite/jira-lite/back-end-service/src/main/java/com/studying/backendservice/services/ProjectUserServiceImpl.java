@@ -13,6 +13,7 @@ import com.studying.backendservice.utils.ProjectRole;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,12 +27,9 @@ public class ProjectUserServiceImpl implements ProjectUserService {
   private final UserRepository userRepository;
   private final ProjectUserRepository projectUserRepository;
 
-  @PersistenceContext
-  private EntityManager entityManager;
-
-
   @Autowired
-  public ProjectUserServiceImpl(ProjectRepository projectRepository, UserRepository userRepository, ProjectUserRepository projectUserRepository) {
+  public ProjectUserServiceImpl(ProjectRepository projectRepository, UserRepository userRepository,
+      ProjectUserRepository projectUserRepository) {
     this.projectUserRepository = projectUserRepository;
     this.userRepository = userRepository;
     this.projectRepository = projectRepository;
@@ -46,18 +44,13 @@ public class ProjectUserServiceImpl implements ProjectUserService {
 
   @Override
   @Transactional
-  public void addUserToProject(int projectId, AddUserToProjectDTO dto) {
-    if (projectUserRepository.existsByUserIdAndProjectId(dto.getUserId(), projectId)) {
-      throw new IllegalStateException("Користувач вже доданий до цього проєкту.");
+  public void addUserToProject(int projectId, @Valid AddUserToProjectDTO dto) {
+    if (projectUserRepository.existsByUserIdAndProjectId(dto.userId(), projectId)) {
+      throw new IllegalStateException("User was already added to the project.");
     }
     Project project = projectRepository.findById(projectId).orElseThrow();
-    User user = userRepository.findById(dto.getUserId()).orElseThrow();
-
-    ProjectUser pu = new ProjectUser();
-    pu.setProject(project);
-    pu.setUser(user);
-    pu.setRoles(dto.getRoles());
-
+    User user = userRepository.findById(dto.userId()).orElseThrow();
+    ProjectUser pu = new ProjectUser(project, user, dto.roles());
     projectUserRepository.save(pu);
   }
 
@@ -78,7 +71,6 @@ public class ProjectUserServiceImpl implements ProjectUserService {
   }
 
 
-
   @Override
   public void removeUserFromProject(int projectId, int userId) {
     projectUserRepository.deleteByProjectIdAndUserId(projectId, userId);
@@ -86,12 +78,7 @@ public class ProjectUserServiceImpl implements ProjectUserService {
 
   private ProjectUserDTO toDto(ProjectUser pu) {
     User u = pu.getUser();
-    ProjectUserDTO dto = new ProjectUserDTO();
-    dto.setId(u.getId());
-    dto.setName(u.getUsername());
-    dto.setEmail(u.getEmail());
-    dto.setActive(u.isEnabled());
-    dto.setRoles(pu.getRoles());
-    return dto;
+    return new ProjectUserDTO(pu.getRoles(), u.isEnabled(), u.getEmail()
+        ,u.getUsername(),u.getId());
   }
 }

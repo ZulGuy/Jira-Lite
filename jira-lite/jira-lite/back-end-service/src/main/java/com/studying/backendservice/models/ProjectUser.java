@@ -45,8 +45,12 @@ public class ProjectUser {
   @Column(name = "role")
   private Set<ProjectRole> roles = new HashSet<>();
 
-  public void setId(int id) {
-    this.id = id;
+  protected ProjectUser() {}
+
+  public ProjectUser(Project project, User user, Set<ProjectRole> roles) {
+    this.project = project;
+    this.user = user;
+    this.roles = roles;
   }
 
   public int getId() {
@@ -57,16 +61,8 @@ public class ProjectUser {
     return project;
   }
 
-  public void setProject(Project project) {
-    this.project = project;
-  }
-
   public User getUser() {
     return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
   }
 
   public Set<ProjectRole> getRoles() {

@@ -2,8 +2,8 @@ package com.studying.backendservice.dto;
 
 public class ResetPasswordRequest {
 
-  public String token;
-  public String newPassword;
+  private String token;
+  private String newPassword;
 
   public String getToken() {
     return token;

@@ -44,19 +44,16 @@ public class AuthController {
   private final UserService userService;
   private final PasswordEncoder passwordEncoder;
 
-  private final TennantServiceImpl tennantService;
-
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
   @Autowired
   public AuthController(
       AuthenticationManager authenticationManager, JwtService jwtService,
-      UserService userService, TennantServiceImpl tennantService, PasswordEncoder passwordEncoder) {
+      UserService userService, PasswordEncoder passwordEncoder) {
     this.authenticationManager = authenticationManager;
     this.jwtService = jwtService;
     this.userService = userService;
-    this.tennantService = tennantService;
     this.passwordEncoder = passwordEncoder;
   }
 
@@ -64,14 +61,14 @@ public class AuthController {
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
-    String tenant = userService.searchUsers(request.email).getFirst().getTennant();
+    String tenant = userService.searchUsers(request.getEmail()).get(0).getTennant();
     setTenant(tenant);
-    System.out.println("request login" + request.email + request.password);
+    System.out.println("request login" + request.getEmail() + request.getPassword());
     System.out.println("TenantContext: " + TenantContext.getTenantId());
     Authentication authentication = authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(request.email, request.password)
+        new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
     );
-    System.out.println("request login" + request.email + request.password);
+    System.out.println("request login" + request.getEmail() + request.getPassword());
     var user = (User) authentication.getPrincipal();
     Map<String, Object> claims = new HashMap<>();
     claims.put("tennantId", user.getTenant());
@@ -114,12 +111,8 @@ public class AuthController {
       return ResponseEntity.badRequest().body("Username already exists");
     }
 
-    User newUser = new User();
-    newUser.setUsername(request.getEmail());
-    newUser.setEmail(request.getEmail());
-    newUser.setPassword(passwordEncoder.encode(request.getPassword()));
-    newUser.setRole(Role.ROLE_USER);
-    newUser.setTenant("public");
+    User newUser = new User(request.getEmail(), passwordEncoder.encode(request.getPassword()),
+        request.getEmail(), "public", Role.ROLE_USER);
     newUser.setEnabled(true);
     UserDTO dto = userService.toDto(newUser);
 
@@ -134,7 +127,7 @@ public class AuthController {
     claimsMap.put("role", user.getAuthorities());
 
     if (TenantContext.getTenantId().equals("public")) {
-      UserDTO dto = userService.searchUsers(userService.getCurrentUser().getEmail()).getFirst();
+      UserDTO dto = userService.searchUsers(userService.getCurrentUser().getEmail()).get(0);
       if (dto.getTennant().equals("public")) {
         return ResponseEntity.badRequest().body("User is not in any tennant");
       }

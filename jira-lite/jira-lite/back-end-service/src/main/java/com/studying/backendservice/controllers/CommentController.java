@@ -24,26 +24,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
 
   private final CommentService commentService;
-  private final TaskService taskService;
-  private final UserService userService;
-  private final UserRepository userRepository;
 
   @Autowired
-  public CommentController(CommentService commentService, TaskService taskService, UserService userService, UserRepository userRepository) {
+  public CommentController(CommentService commentService) {
     this.commentService = commentService;
-    this.taskService = taskService;
-    this.userService = userService;
-    this.userRepository = userRepository;
   }
 
   @PreAuthorize("@securityService.isAdminOrEditorByTaskId(#taskId)")
   @PostMapping("/tasks/{taskId}")
-  public ResponseEntity<Comment> addComment(@RequestBody CommentDTO dto, @PathVariable int taskId) {
-    Comment comment = new Comment();
-    comment.setDescription(dto.getDescription());
-    comment.setTask(taskService.getTaskById(taskId)); // твій метод
-    comment.setAuthor(userRepository.findByUsername(userService.getCurrentUser().getName()).orElseThrow()); // з контексту
-    return ResponseEntity.ok(commentService.addComment(comment));
+  public ResponseEntity<CommentDTO> addComment(@RequestBody CommentDTO dto, @PathVariable int taskId) {
+    return ResponseEntity.ok(commentService.addComment(dto, taskId));
   }
 
   @GetMapping("/tasks/{taskId}")
@@ -53,7 +43,7 @@ public class CommentController {
           CommentDTO dto = new CommentDTO();
           dto.setId(comment.getId());
           dto.setDescription(comment.getDescription());
-          dto.setAuthorName(comment.getAuthor() != null ? comment.getAuthor().getUsername() : "Анонім");
+          dto.setAuthorName(comment.getAuthorName() != null ? comment.getAuthorName() : "Анонім");
           return dto;
         }).toList()
     );
@@ -72,7 +62,7 @@ public class CommentController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Comment> getCommentById(@PathVariable int id) {
+  public ResponseEntity<CommentDTO> getCommentById(@PathVariable int id) {
     return ResponseEntity.ok(commentService.getCommentById(id));
   }
 

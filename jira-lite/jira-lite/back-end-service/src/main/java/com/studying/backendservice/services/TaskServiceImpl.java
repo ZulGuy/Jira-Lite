@@ -3,9 +3,10 @@ package com.studying.backendservice.services;
 import com.studying.backendservice.dto.TaskDTO;
 import com.studying.backendservice.models.Project;
 import com.studying.backendservice.models.Task;
-import com.studying.backendservice.models.TaskType;
+import com.studying.backendservice.models.User;
 import com.studying.backendservice.repositories.ProjectRepository;
 import com.studying.backendservice.repositories.TaskRepository;
+import com.studying.backendservice.repositories.UserRepository;
 import com.studying.backendservice.utils.Status;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -18,35 +19,57 @@ public class TaskServiceImpl implements TaskService {
 
   private final TaskRepository taskRepository;
   private final ProjectRepository projectRepository;
-  private final TaskTypeServiceImpl taskTypeService;
+  private final UserRepository userRepository;
+  private final CommentService commentsService;
 
   @Autowired
-  public TaskServiceImpl(TaskRepository taskRepository, ProjectRepository projectRepository, TaskTypeServiceImpl taskTypeService) {
+  public TaskServiceImpl(TaskRepository taskRepository, CommentService commentsService,
+      ProjectRepository projectRepository, UserRepository userRepository) {
     this.taskRepository = taskRepository;
     this.projectRepository = projectRepository;
-    this.taskTypeService = taskTypeService;
+    this.userRepository = userRepository;
+    this.commentsService = commentsService;
   }
 
   @Override
-  public Task createTask(Task task) {
-    if (task.getStatus() == null) {
-      task.setStatus(Status.TODO);
+  public TaskDTO createTask(TaskDTO task) {
+    Project project = projectRepository.findById(task.getProjectId()).orElseThrow(
+        () -> new EntityNotFoundException("Project not found")
+    );
+    User assignee = null;
+    if (task.getAssigneeId() != null) {
+      assignee = userRepository.findById(task.getAssigneeId()).orElseThrow(
+          () -> new EntityNotFoundException("Assignee not found")
+      );
     }
-    return taskRepository.save(task);
+    User initiator = userRepository.findById(task.getInitiatorId()).orElseThrow(
+        () -> new EntityNotFoundException("Initiator not found")
+    );
+    Task newTask = new Task(task.getSummary(), task.getDescription(), project, assignee, initiator,
+        task.getStatus());
+
+    if (task.getStatus() == null) {
+      newTask.setStatus(Status.TODO);
+    }
+    taskRepository.save(newTask);
+    return toDTO(newTask);
   }
 
   @Override
   @Transactional(readOnly = true)
-  public List<Task> getTasksForProject(int projectId) {
+  public List<TaskDTO> getTasksForProject(int projectId) {
     Project project = projectRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found"));
-    return project.getTasks();
+    return project.getTasks().stream()
+        .map(this::toDTO)
+        .toList();
   }
 
   @Override
-  public Task getTaskById(int id) {
-    return taskRepository.findById(id)
+  public TaskDTO getTaskById(int id) {
+    Task task = taskRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Task not found"));
+    return toDTO(task);
   }
 
   @Override
@@ -55,34 +78,51 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
-  public Task updateTask(Task task) {
+  public TaskDTO updateTask(TaskDTO task) {
     Task existing = taskRepository.findById(task.getId())
         .orElseThrow(() -> new EntityNotFoundException("Task not found"));
 
     existing.setSummary(task.getSummary());
     existing.setDescription(task.getDescription());
+    User assignee = null;
+    User initiator = null;
 
     if (task.getStatus() != null) {
       existing.setStatus(task.getStatus());
     }
 
-    if (task.getAssignee() != null) {
-      existing.setAssignee(task.getAssignee());
+    if (task.getAssigneeId() != null) {
+      assignee = userRepository.findById(task.getAssigneeId()).orElseThrow(
+          () -> new EntityNotFoundException("Assignee not found")
+      );
+      existing.setAssignee(assignee);
     }
 
-    if (task.getInitiator() != null) {
-      existing.setInitiator(task.getInitiator());
+    if (task.getInitiatorId() != null) {
+      initiator = userRepository.findById(task.getAssigneeId()).orElseThrow(
+          () -> new EntityNotFoundException("Assignee not found")
+      );
+      existing.setInitiator(initiator);
     }
 
     System.out.println("Updating task " + task.getId() + " with status: " + task.getStatus());
 
-    return taskRepository.save(existing);
+    taskRepository.save(existing);
+    return toDTO(existing);
   }
 
-  @Override
-  @Transactional(readOnly = true)
-  public List<Task> getTasksByTaskTypeName(String name) {
-    TaskType taskType = this.taskTypeService.getTaskTypeByName(name);
-    return taskType.getTasks();
+  public TaskDTO toDTO(Task task) {
+    TaskDTO dto = new TaskDTO();
+    dto.setId(task.getId());
+    dto.setSummary(task.getSummary());
+    dto.setDescription(task.getDescription());
+    dto.setStatus(task.getStatus());
+    dto.setProjectId(task.getProject().getId());
+    dto.setAssigneeId(task.getAssignee() != null ? task.getAssignee().getId() : null);
+    dto.setInitiatorId(task.getInitiator() != null ? task.getInitiator().getId() : null);
+    dto.setComments(task.getComments().stream()
+        .map(commentsService::toDto)
+        .toList());
+    return dto;
   }
 }

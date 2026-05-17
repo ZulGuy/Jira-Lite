@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 public class PasswordResetController {
 
+  private final PasswordResetService resetService;
+  private final EmailService emailService;
+
   @Autowired
-  private PasswordResetService resetService;
-  @Autowired
-  private EmailService emailService;
+  public PasswordResetController(PasswordResetService resetService, EmailService emailService) {
+    this.resetService = resetService;
+    this.emailService = emailService;
+  }
 
   @PostMapping("/forgot-password")
   public ResponseEntity<?> sendResetLink(@RequestBody Map<String, String> payload) {

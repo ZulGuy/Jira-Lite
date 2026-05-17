@@ -2,7 +2,7 @@ package com.studying.backendservice.dto;
 
 public class ForgotPasswordRequest {
 
-  public String email;
+  private String email;
 
   public String getEmail() {
     return email;

@@ -34,6 +34,13 @@ public class Project {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
   private List<Task> tasks = new ArrayList<Task>();
 
+  protected Project() {}
+
+  public Project(String name, String description) {
+    this.name = name;
+    this.description = description;
+  }
+
   public String getName() {
     return name;
   }
@@ -44,10 +51,6 @@ public class Project {
 
   public int getId() {
     return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
   }
 
   public String getDescription() {

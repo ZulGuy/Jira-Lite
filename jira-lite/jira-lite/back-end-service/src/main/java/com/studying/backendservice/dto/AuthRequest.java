@@ -8,14 +8,9 @@ public class AuthRequest implements Serializable {
 
   @JsonProperty("email")
   @Email
-  public String email;
+  private String email;
   @JsonProperty("password")
-  public String password;
-
-  public AuthRequest(String email, String password) {
-    this.email = email;
-    this.password = password;
-  }
+  private String password;
 
   public AuthRequest() {
   }

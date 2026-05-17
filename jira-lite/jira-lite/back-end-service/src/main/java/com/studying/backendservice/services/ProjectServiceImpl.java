@@ -46,9 +46,7 @@ public class ProjectServiceImpl implements ProjectService {
 
   @Override
   public void addProject(ProjectDTO project) {
-    Project projectEntity = new Project();
-    projectEntity.setName(project.getName());
-    projectEntity.setDescription(project.getDescription());
+    Project projectEntity = new Project(project.getName(), project.getDescription());
     projectRepository.save(projectEntity);
   }
 

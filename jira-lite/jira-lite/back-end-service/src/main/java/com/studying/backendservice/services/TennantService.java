@@ -12,6 +12,5 @@ public interface TennantService {
   TennantDTO createTennant(String name, int adminId)  throws AccessDeniedException;
   void deleteTennant(int id);
   TennantDTO toDto(Tennant tennant);
-  Tennant toEntity(TennantDTO tennantDto);
 
 }

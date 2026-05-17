@@ -5,11 +5,11 @@ import com.studying.backendservice.models.Task;
 import java.util.List;
 
 public interface TaskService {
-  Task createTask(Task task);
-  List<Task> getTasksForProject(int projectId);
-  Task getTaskById(int id);
+  TaskDTO createTask(TaskDTO task);
+  List<TaskDTO> getTasksForProject(int projectId);
+  TaskDTO getTaskById(int id);
   void deleteTask(int id);
-  Task updateTask(Task task);
-  List<Task> getTasksByTaskTypeName(String name);
+  TaskDTO updateTask(TaskDTO task);
+  TaskDTO toDTO(Task task);
 
 }

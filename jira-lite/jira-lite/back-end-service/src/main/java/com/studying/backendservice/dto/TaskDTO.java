@@ -4,14 +4,14 @@ import com.studying.backendservice.utils.Status;
 import java.util.List;
 
 public class TaskDTO {
-  public int id;
-  public String summary;
-  public String description;
-  public int assigneeId;
-  public int initiatorId;
-  public Status status;
-  public int projectId;
-  public List<CommentDTO> comments;
+  private int id;
+  private String summary;
+  private String description;
+  private int assigneeId;
+  private int initiatorId;
+  private Status status;
+  private int projectId;
+  private List<CommentDTO> comments;
 
   public int getId() {
     return id;

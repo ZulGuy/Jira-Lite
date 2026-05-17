@@ -11,46 +11,31 @@ public class ProjectUserDTO {
   private boolean active;
   private Set<ProjectRole> roles;
 
-  public ProjectUserDTO() {
+  public ProjectUserDTO(Set<ProjectRole> roles, boolean active, String email, String name, int id) {
+    this.roles = roles;
+    this.active = active;
+    this.email = email;
+    this.name = name;
+    this.id = id;
   }
 
   public int getId() {
     return id;
   }
 
-  public void setId(int id) {
-    this.id = id;
-  }
-
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public String getEmail() {
     return email;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
   public boolean isActive() {
     return active;
   }
 
-  public void setActive(boolean active) {
-    this.active = active;
-  }
-
   public Set<ProjectRole> getRoles() {
     return roles;
-  }
-
-  public void setRoles(Set<ProjectRole> roles) {
-    this.roles = roles;
   }
 }

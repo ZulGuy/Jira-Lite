@@ -4,6 +4,7 @@ import com.studying.backendservice.dto.AddUserToProjectDTO;
 import com.studying.backendservice.dto.ProjectUserDTO;
 import com.studying.backendservice.dto.UpdateProjectRolesDTO;
 import com.studying.backendservice.services.ProjectUserService;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,8 +36,8 @@ public class ProjectUserController {
 
   @PreAuthorize("@securityService.canManageProject(#projectId, principal)")
   @PostMapping
-  public void addUser(@PathVariable int projectId, @RequestBody AddUserToProjectDTO dto) {
-    System.out.println("Received addUserToProject: " + dto.getUserId() + " roles: " + dto.getRoles());
+  public void addUser(@PathVariable int projectId, @RequestBody @Valid AddUserToProjectDTO dto) {
+    System.out.println("Received addUserToProject: " + dto.userId() + " roles: " + dto.roles());
     projectUserService.addUserToProject(projectId, dto);
   }
 

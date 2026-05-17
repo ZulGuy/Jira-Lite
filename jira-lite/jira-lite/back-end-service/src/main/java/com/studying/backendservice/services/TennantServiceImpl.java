@@ -23,19 +23,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class TennantServiceImpl implements TennantService {
 
-  private JdbcTemplate jdbcTemplate;
-  private TennantRepository tennantRepository;
-  private UserServiceImpl userService;
-  private UserRepository userRepository;
+  private final JdbcTemplate jdbcTemplate;
+  private final TennantRepository tennantRepository;
+  private final UserServiceImpl userService;
   private static final Pattern VALID_NAME = Pattern.compile("^[a-z][a-z0-9_]{2,29}$");
 
   @Autowired
   public TennantServiceImpl(JdbcTemplate jdbcTemplate, TennantRepository tennantRepository,
-      UserServiceImpl userService, UserRepository userRepository) {
+      UserServiceImpl userService) {
     this.jdbcTemplate = jdbcTemplate;
     this.tennantRepository = tennantRepository;
     this.userService = userService;
-    this.userRepository = userRepository;
   }
 
   @Override
@@ -68,9 +66,7 @@ public class TennantServiceImpl implements TennantService {
       throw new RuntimeException("Failed to create tenant schema: " + name, e);
     }
 
-    Tennant tennant = new Tennant();
-    tennant.setName(name);
-    tennant.setAdminId(adminId);
+    Tennant tennant = new Tennant(name, adminId);
     TennantDTO tennantDTO = toDto(tennantRepository.save(tennant));
     UserDTO admin = userService.getUserById(adminId);
     admin.setTennant(name);
@@ -99,7 +95,7 @@ public class TennantServiceImpl implements TennantService {
           .replace("{schema}", schema);
       return Arrays.stream(sql.split(";"))
           .map(String::trim)
-          .filter(s -> s.isBlank())
+          .filter(String::isBlank)
           .toList();
     } catch (Exception e) {
       throw new RuntimeException("Cannot load tenant DDL template", e);
@@ -119,15 +115,5 @@ public class TennantServiceImpl implements TennantService {
     dto.setAdminId(tennant.getAdminId());
     dto.setStatus(tennant.isEnabled());
     return dto;
-  }
-
-  @Override
-  public Tennant toEntity(TennantDTO dto) {
-    Tennant tennant = new Tennant();
-    tennant.setId(dto.getId());
-    tennant.setName(dto.getName());
-    tennant.setEnabled(dto.isStatus());
-    tennant.setAdminId(dto.getAdminId());
-    return tennant;
   }
 }

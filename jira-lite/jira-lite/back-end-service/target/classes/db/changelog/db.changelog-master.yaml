@@ -23,63 +23,21 @@ databaseChangeLog:
         - sql:
             splitStatements: true
             sql: |
+              CREATE TABLE IF NOT EXISTS public.tennants (
+                  id SERIAL PRIMARY KEY,
+                  name TEXT NOT NULL UNIQUE,
+                  status BOOLEAN NOT NULL DEFAULT TRUE
+              );
+              INSERT INTO public.tennants (id, name, status) VALUES (1, 'tenant_01', TRUE);
+              INSERT INTO public.tennants (id, name, status) VALUES (2, 'tenant_02', TRUE);
               CREATE TABLE IF NOT EXISTS public.users (
                   id         SERIAL       PRIMARY KEY,
                   email      TEXT         NOT NULL UNIQUE,
                   username   TEXT         NOT NULL UNIQUE,
                   password   TEXT         NOT NULL,
                   role       VARCHAR(50)  NOT NULL,
-                  tenant_id  TEXT         NOT NULL,
+                  tenant_id  TEXT         NOT NULL REFERENCES public.tennants(id),
                   active     BOOLEAN      NOT NULL DEFAULT TRUE
-              );
-
-              CREATE TABLE IF NOT EXISTS public.projects (
-                  id          SERIAL  PRIMARY KEY,
-                  name        TEXT    NOT NULL UNIQUE,
-                  description TEXT    UNIQUE
-              );
-
-              CREATE TABLE IF NOT EXISTS public.task_types (
-                  id   SERIAL        PRIMARY KEY,
-                  name VARCHAR(255)  NOT NULL
-              );
-
-              CREATE TABLE IF NOT EXISTS public.tasks (
-                  id           SERIAL       PRIMARY KEY,
-                  project_id   INTEGER      NOT NULL REFERENCES public.projects(id),
-                  summary      TEXT         NOT NULL,
-                  description  TEXT         NOT NULL,
-                  assignee_id  INTEGER      REFERENCES public.users(id),
-                  initiator_id INTEGER      REFERENCES public.users(id),
-                  status       VARCHAR(20)  NOT NULL,
-                  task_type_id INTEGER      REFERENCES public.task_types(id),
-                  created_at   TIMESTAMP    DEFAULT NOW()
-              );
-
-              CREATE TABLE IF NOT EXISTS public.project_users (
-                  id         SERIAL   PRIMARY KEY,
-                  user_id    INTEGER  NOT NULL REFERENCES public.users(id),
-                  project_id INTEGER  NOT NULL REFERENCES public.projects(id),
-                  CONSTRAINT uq_project_users_public UNIQUE (user_id, project_id)
-              );
-
-              CREATE TABLE IF NOT EXISTS public.project_user_roles (
-                  project_user_id INTEGER      NOT NULL REFERENCES public.project_users(id),
-                  role            VARCHAR(50)
-              );
-
-              CREATE TABLE IF NOT EXISTS public.comments (
-                  id          SERIAL   PRIMARY KEY,
-                  task_id     INTEGER  NOT NULL REFERENCES public.tasks(id),
-                  description TEXT     NOT NULL,
-                  author_id   INTEGER  NOT NULL REFERENCES public.users(id)
-              );
-
-              CREATE TABLE IF NOT EXISTS public.custom_fields (
-                  id    SERIAL        PRIMARY KEY,
-                  name  VARCHAR(255)  NOT NULL,
-                  value TEXT          NOT NULL,
-                  type  VARCHAR(50)   NOT NULL
               );
 
               CREATE TABLE IF NOT EXISTS public.invitation_token (

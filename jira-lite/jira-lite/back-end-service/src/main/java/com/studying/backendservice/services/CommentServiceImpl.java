@@ -2,8 +2,12 @@ package com.studying.backendservice.services;
 
 import com.studying.backendservice.dto.CommentDTO;
 import com.studying.backendservice.models.Comment;
+import com.studying.backendservice.models.Task;
+import com.studying.backendservice.models.User;
 import com.studying.backendservice.repositories.CommentRepository;
 import com.studying.backendservice.repositories.TaskRepository;
+import com.studying.backendservice.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,25 +18,39 @@ public class CommentServiceImpl implements CommentService {
 
   private final CommentRepository commentRepository;
   private final TaskRepository taskRepository;
+  private final TaskService taskService;
+  private final UserRepository userRepository;
   private final EmailService emailService;
 
   @Autowired
-  public CommentServiceImpl(CommentRepository commentRepository, TaskRepository taskRepository, EmailService emailService) {
+  public CommentServiceImpl(CommentRepository commentRepository,
+      TaskRepository taskRepository, EmailService emailService,
+      UserRepository userRepository, TaskService taskService) {
     this.commentRepository = commentRepository;
     this.taskRepository = taskRepository;
     this.emailService = emailService;
+    this.userRepository = userRepository;
+    this.taskService = taskService;
   }
 
   @Transactional
   @Override
-  public Comment addComment(Comment comment) {
-    emailService.sendNewCommentNotification(comment.getTask(), comment);
-    return commentRepository.save(comment);
+  public CommentDTO addComment(CommentDTO comment, int taskId) {
+    User author = userRepository.findByEmail(comment.getAuthorName()).orElseThrow(
+        () -> new EntityNotFoundException("User not found")
+    );
+    Task task = taskRepository.findById(taskId).orElseThrow(
+        () -> new EntityNotFoundException("Task not found")
+    );
+    Comment newComment = new Comment(comment.getDescription(), author, task);
+    emailService.sendNewCommentNotification(taskService.getTaskById(taskId), comment);
+    commentRepository.save(newComment);
+    return comment;
   }
 
   @Override
-  public List<Comment> getCommentsForTask(int taskId) {
-    return commentRepository.findByTaskId(taskId);
+  public List<CommentDTO> getCommentsForTask(int taskId) {
+    return commentRepository.findByTaskId(taskId).stream().map(this::toDto).toList();
   }
 
   @Override
@@ -49,7 +67,19 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public Comment getCommentById(int id) {
-    return commentRepository.findById(id).orElseThrow();
+  public CommentDTO getCommentById(int id) {
+    Comment comment = commentRepository.findById(id).orElseThrow(
+        () -> new EntityNotFoundException("Comment not found!")
+    );
+    return toDto(comment);
+  }
+
+  @Override
+  public CommentDTO toDto(Comment comment) {
+    CommentDTO dto = new CommentDTO();
+    dto.setId(comment.getId());
+    dto.setDescription(comment.getDescription());
+    dto.setAuthorName(comment.getAuthor().getEmail());
+    return dto;
   }
 }

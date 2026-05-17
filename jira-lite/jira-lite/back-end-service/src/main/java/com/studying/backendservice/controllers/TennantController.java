@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/tennants")
 public class TennantController {
 
-  private TennantService tennantService;
-  private UserService userService;
+  private final TennantService tennantService;
+  private final UserService userService;
 
   @Autowired
   public TennantController(TennantService tennantService, UserService userService) {
