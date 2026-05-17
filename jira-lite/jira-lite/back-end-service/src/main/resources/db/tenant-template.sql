@@ -16,11 +16,6 @@ CREATE TABLE IF NOT EXISTS {schema}.projects (
                                                  description TEXT   UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS {schema}.task_types (
-                                                   id   SERIAL       PRIMARY KEY,
-                                                   name VARCHAR(255) NOT NULL
-    );
-
 CREATE TABLE IF NOT EXISTS {schema}.tasks (
                                               id           SERIAL      PRIMARY KEY,
                                               project_id   INTEGER     NOT NULL REFERENCES {schema}.projects(id),
@@ -29,7 +24,6 @@ CREATE TABLE IF NOT EXISTS {schema}.tasks (
     assignee_id  INTEGER     REFERENCES {schema}.users(id),
     initiator_id INTEGER     REFERENCES {schema}.users(id),
     status       VARCHAR(20) NOT NULL,
-    task_type_id INTEGER     REFERENCES {schema}.task_types(id),
     created_at   TIMESTAMP   DEFAULT NOW()
     );
 
@@ -50,13 +44,6 @@ CREATE TABLE IF NOT EXISTS {schema}.comments (
                                                  task_id     INTEGER NOT NULL REFERENCES {schema}.tasks(id),
     description TEXT    NOT NULL,
     author_id   INTEGER NOT NULL REFERENCES {schema}.users(id)
-    );
-
-CREATE TABLE IF NOT EXISTS {schema}.custom_fields (
-                                                      id    SERIAL       PRIMARY KEY,
-                                                      name  VARCHAR(255) NOT NULL,
-    value TEXT         NOT NULL,
-    type  VARCHAR(50)  NOT NULL
     );
 
 CREATE TABLE IF NOT EXISTS {schema}.invitation_token (

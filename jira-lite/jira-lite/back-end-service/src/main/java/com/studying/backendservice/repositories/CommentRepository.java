@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
-  @EntityGraph(attributePaths = {"user", "task"})
+  @EntityGraph(attributePaths = {"author", "task"})
   List<Comment> findByTaskId(int id);
-  @EntityGraph(attributePaths = {"user", "task"})
+  @EntityGraph(attributePaths = {"author", "task"})
   void deleteById(int id);
-  @EntityGraph(attributePaths = {"user", "task"})
+  @EntityGraph(attributePaths = {"author", "task"})
   void deleteAllByTaskId(int id);
 
 }

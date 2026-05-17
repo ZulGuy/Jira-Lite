@@ -12,10 +12,6 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { InviteUserComponent } from './components/invite-user/invite-user.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { RegisterInviteComponent } from './components/register-invite/register-invite.component';
-import { TaskTypeListComponent } from './components/task-type-list/task-type-list.component';
-import { TaskTypeDetailsComponent } from './components/task-type-details/task-type-details.component';
-import { CustomFieldListComponent } from './components/custom-field-list/custom-field-list.component';
-import { CustomFieldDetailsComponent } from './components/custom-field-details/custom-field-details.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -39,10 +35,6 @@ export const routes: Routes = [
       { path: 'users/:id', component: UserComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'admin/invite', component: InviteUserComponent },
-      { path: 'admin/task-types', component: TaskTypeListComponent },
-      { path: 'admin/task-types/:name', component: TaskTypeDetailsComponent },
-      { path: 'admin/custom-fields', component: CustomFieldListComponent },
-      { path: 'admin/custom-fields/:id', component: CustomFieldDetailsComponent },
       { path: 'logout', component: LogoutComponent }
     ]
   },

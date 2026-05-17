@@ -21,7 +21,7 @@ public class Tennant {
   private String name;
   @Column(name = "status", nullable = false)
   private boolean status = true;
-  @Column(name = "admin_id", nullable = false)
+  @Column(name = "admin_id")
   private int adminId;
 
   public Tennant(String name, int adminId) {

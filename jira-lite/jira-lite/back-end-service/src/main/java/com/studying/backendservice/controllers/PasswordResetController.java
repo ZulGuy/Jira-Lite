@@ -27,7 +27,7 @@ public class PasswordResetController {
   @PostMapping("/forgot-password")
   public ResponseEntity<?> sendResetLink(@RequestBody Map<String, String> payload) {
     String token = resetService.createResetToken(payload.get("email"));
-    String resetLink = "http://localhost:4200/reset-password?token=" + token;
+    String resetLink = "http://localhost:80/reset-password?token=" + token;
     emailService.sendHtmlEmail(payload.get("email"), "Reset Password", "Click here: " + resetLink);
     return ResponseEntity.ok().body(new HashMap<>() {{
       put("message", "Пароль змінено успішно.");

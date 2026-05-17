@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/invitations")
-@PreAuthorize("@securityService.haveAdminAccess(principal)")
 public class InvitationController {
   private final InvitationService invitationService;
   private final UserService userService;
@@ -28,6 +27,7 @@ public class InvitationController {
   }
 
   @PostMapping("/send")
+  @PreAuthorize("@securityService.haveAdminAccess(principal)")
   public ResponseEntity<?> send(@RequestParam String email) {
     invitationService.sendInvitation(email);
     return ResponseEntity.ok("Запрошення надіслано");
@@ -51,7 +51,7 @@ public class InvitationController {
     TenantContext.setTenantId(tennant);
     userService.register(payload);
     TenantContext.setTenantId("public");
-    userService.update(payload);
+    userService.register(payload);
     invitationService.markUsed(token);
 
     return ResponseEntity.ok("Користувача створено");

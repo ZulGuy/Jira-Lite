@@ -43,6 +43,7 @@ public class TaskController {
 
     TaskDTO createdTask = taskService.createTask(dto);
     emailService.sendTaskCreatedNotification(createdTask);
+    System.out.println("ID of created task" + createdTask.getId());
 
     return ResponseEntity.ok(dto);
   }
@@ -65,6 +66,7 @@ public class TaskController {
   @PreAuthorize("@securityService.isAdminOrEditorByTaskId(#id)")
   @PutMapping("/{id}")
   public ResponseEntity<TaskDTO> updateTask(@PathVariable int id, @RequestBody TaskDTO dto) {
+    dto.setId(id);
     return ResponseEntity.ok(taskService.updateTask(dto));
   }
 

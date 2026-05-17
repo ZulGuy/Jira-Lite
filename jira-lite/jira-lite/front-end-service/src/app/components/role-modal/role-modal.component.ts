@@ -29,18 +29,17 @@ export class RoleModalComponent {
   }
 
   removeRole(role: ProjectRole) {
-    const remaining = (this.user().roles || []).filter(r => r !== role);
+    const remaining = this.displayedRoles().filter(r => r !== role);
     this.projectUserService.updateRoles(this.projectId, this.user().id, remaining)
       .subscribe(() => {
         this.displayedRoles.set(remaining);
         this.rolesChanged.emit();
       });
-
   }
 
   addRole() {
     if (this.selectedRole) {
-      const updated = [...(this.user().roles || []), this.selectedRole];
+      const updated = [...this.displayedRoles(), this.selectedRole];
       this.projectUserService.updateRoles(this.projectId, this.user().id, updated)
         .subscribe(() => {
           this.displayedRoles.set(updated);

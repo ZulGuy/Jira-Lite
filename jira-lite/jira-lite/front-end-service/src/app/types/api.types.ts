@@ -21,7 +21,7 @@ export interface UserDTO {
   email: string;
   active: boolean;
   role: Role;
-  tenant: string;
+  tennant: string;
 }
 
 export interface CommentDTO {
@@ -38,6 +38,8 @@ export interface TaskDTO {
   description: string;
   assignee?: UserDTO;
   initiator?: UserDTO;
+  assigneeId?: number | null;
+  initiatorId?: number | null;
   status: TaskStatus;
   projectId: number;
 }
@@ -57,9 +59,9 @@ export interface CustomFieldDTO {
 }
 
 export interface TenantDTO {
-  id: string;
+  id: number;
   name: string;
-  status: string;
+  status: boolean;
   adminId: number;
 }
 

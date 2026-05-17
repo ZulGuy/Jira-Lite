@@ -14,6 +14,10 @@ export class TopbarComponent {
 
   constructor(private authService: AuthService) {}
 
+  isPublicPage(): boolean {
+    return (localStorage.getItem('tenantId') ?? 'public') === 'public';
+  }
+
   canManageUsers(): boolean {
     return this.authService.isSystemAdmin();
   }

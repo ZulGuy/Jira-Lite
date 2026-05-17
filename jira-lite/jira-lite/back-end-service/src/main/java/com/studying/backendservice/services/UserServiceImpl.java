@@ -23,23 +23,13 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
-  private final TennantServiceImpl tennantService;
-  private PasswordEncoder passwordEncoder;
-  private final PasswordResetTokenRepository tokenRepository;
   private final PasswordEncoder encoder;
-  private final EmailService emailService;
 
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
-      PasswordResetTokenRepository tokenRepository, PasswordEncoder encoder,
-      EmailService emailService, TennantServiceImpl tennantService) {
+  public UserServiceImpl(UserRepository userRepository, PasswordEncoder encoder) {
     this.userRepository = userRepository;
-    this.passwordEncoder = passwordEncoder;
-    this.tokenRepository = tokenRepository;
     this.encoder = encoder;
-    this.emailService = emailService;
-    this.tennantService = tennantService;
   }
 
   @Override
@@ -102,7 +92,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void register(UserDTO userDto) {
-    User user = new User(userDto.getEmail(), passwordEncoder.encode(userDto.getPassword()),
+    User user = new User(userDto.getEmail(), encoder.encode(userDto.getPassword()),
         userDto.getName(), userDto.getTennant(), Role.ROLE_USER);
     user.setEnabled(true);
     userRepository.save(user);

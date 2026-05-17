@@ -21,13 +21,9 @@ export class LoginComponent {
   constructor(private auth: AuthService, private router: Router) {}
 
   login() {
-    const tenantId = this.username.includes('@')
-      ? this.username.split('@')[1]
-      : 'public';
-    localStorage.setItem('tenantId', tenantId);
-    console.log('tenantId', tenantId);
+    localStorage.setItem('tenantId', 'public');
 
-    this.auth.login({username: this.username, password: this.password}).subscribe({
+    this.auth.login({email: this.username, password: this.password}).subscribe({
       next: () => {
         this.auth.redirectUrl = null;
         localStorage.removeItem('recentProject');

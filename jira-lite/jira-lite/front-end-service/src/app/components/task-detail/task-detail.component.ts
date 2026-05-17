@@ -75,7 +75,10 @@ export class TaskDetailComponent implements OnInit {
   }
 
   save() {
-    this.taskService.updateTask(this.task).subscribe(() => alert('Збережено!'));
+    this.taskService.updateTask(this.task).subscribe({
+      next: () => alert('Збережено!'),
+      error: (err) => alert('Помилка збереження: ' + (err?.error?.message || err?.status || 'невідома помилка'))
+    });
   }
 
   addComment() {

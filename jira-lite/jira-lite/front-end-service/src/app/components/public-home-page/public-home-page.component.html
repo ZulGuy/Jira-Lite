@@ -1,0 +1,84 @@
+<div class="workspace-section">
+
+  <div class="section-header">
+    <div class="section-title">Workspace</div>
+    <div class="section-subtitle">Manage your personal workspace</div>
+  </div>
+
+  <!-- Loading skeleton -->
+  <div *ngIf="tenantLoading()" class="workspace-card skeleton">
+    <div class="skeleton-line wide"></div>
+    <div class="skeleton-line narrow"></div>
+  </div>
+
+  <!-- No workspace: user can create one -->
+  <div *ngIf="!tenantLoading() && !hasTenant" class="workspace-card empty">
+    <div class="workspace-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M2 20h20M5 20V8l7-5 7 5v12M9 20v-5h6v5"/>
+      </svg>
+    </div>
+    <div class="workspace-info">
+      <div class="workspace-name">No workspace yet</div>
+      <div class="workspace-meta">Create a workspace to manage projects and invite your team.</div>
+    </div>
+    <button class="btn btn-primary" (click)="showCreateModal = true">
+      Create workspace
+    </button>
+  </div>
+
+  <!-- Has workspace (creator or invitee) -->
+  <div *ngIf="!tenantLoading() && hasTenant && tenant()" class="workspace-card">
+    <div class="workspace-icon active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M2 20h20M5 20V8l7-5 7 5v12M9 20v-5h6v5"/>
+      </svg>
+    </div>
+    <div class="workspace-info">
+      <div class="workspace-name">{{ tenant()!.name }}</div>
+      <div class="workspace-meta">
+        <span class="badge" [class.badge-active]="tenant()!.status" [class.badge-inactive]="!tenant()!.status">
+          {{ tenant()!.status ? 'Active' : 'Disabled' }}
+        </span>
+        <span class="meta-divider">·</span>
+        <span class="meta-label">{{ isAdmin ? 'You are the admin' : 'Member' }}</span>
+      </div>
+    </div>
+    <div class="workspace-actions">
+      <button
+        class="btn btn-primary"
+        (click)="switchTenant()"
+        [disabled]="switching() || disabling() || !tenant()!.status"
+      >
+        <span *ngIf="switching()" class="spinner"></span>
+        {{ switching() ? 'Switching…' : 'Switch to workspace' }}
+      </button>
+      <!-- Disable is only available to the admin (creator) -->
+      <button
+        *ngIf="isAdmin"
+        class="btn btn-danger"
+        (click)="disableTenant()"
+        [disabled]="switching() || disabling()"
+      >
+        <span *ngIf="disabling()" class="spinner"></span>
+        {{ disabling() ? 'Disabling…' : 'Disable' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Tenant info loaded but no record found (edge case) -->
+  <div *ngIf="!tenantLoading() && hasTenant && !tenant()" class="workspace-card empty">
+    <div class="workspace-info">
+      <div class="workspace-name">Workspace unavailable</div>
+      <div class="workspace-meta">Could not load workspace details. Please contact your admin.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Create workspace modal -->
+<app-create-tenant-modal
+  *ngIf="showCreateModal"
+  (close)="showCreateModal = false"
+  (tenantCreated)="onTenantCreated()"
+/>

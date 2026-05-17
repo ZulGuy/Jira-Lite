@@ -1,19 +1,6 @@
 databaseChangeLog:
 
   # ═══════════════════════════════════════════════════════════════
-  # 000 — create tenant schemas
-  # ═══════════════════════════════════════════════════════════════
-  - changeSet:
-      id: 000-create-schemas
-      author: volodymyr
-      changes:
-        - sql:
-            splitStatements: true
-            sql: |
-              CREATE SCHEMA IF NOT EXISTS tennant_01;
-              CREATE SCHEMA IF NOT EXISTS tennant_02;
-
-  # ═══════════════════════════════════════════════════════════════
   # 001 — public schema: full 10-table schema
   # ═══════════════════════════════════════════════════════════════
   - changeSet:
@@ -24,30 +11,42 @@ databaseChangeLog:
             splitStatements: true
             sql: |
               CREATE TABLE IF NOT EXISTS public.tennants (
-                  id SERIAL PRIMARY KEY,
-                  name TEXT NOT NULL UNIQUE,
-                  status BOOLEAN NOT NULL DEFAULT TRUE
+                  id       SERIAL   PRIMARY KEY,
+                  name     TEXT     NOT NULL UNIQUE,
+                  status   BOOLEAN  NOT NULL DEFAULT TRUE,
+                  admin_id INTEGER  UNIQUE
               );
-              INSERT INTO public.tennants (id, name, status) VALUES (1, 'tenant_01', TRUE);
-              INSERT INTO public.tennants (id, name, status) VALUES (2, 'tenant_02', TRUE);
+              
+              -- 1. Sentinel рядок для 'public' контексту
+              INSERT INTO public.tennants (name, status, admin_id)
+              VALUES ('public', TRUE, NULL)
+              ON CONFLICT (name) DO NOTHING;
+              
               CREATE TABLE IF NOT EXISTS public.users (
-                  id         SERIAL       PRIMARY KEY,
-                  email      TEXT         NOT NULL UNIQUE,
-                  username   TEXT         NOT NULL UNIQUE,
-                  password   TEXT         NOT NULL,
-                  role       VARCHAR(50)  NOT NULL,
-                  tenant_id  TEXT         NOT NULL REFERENCES public.tennants(id),
-                  active     BOOLEAN      NOT NULL DEFAULT TRUE
+                  id          SERIAL       PRIMARY KEY,
+                  email       TEXT         NOT NULL UNIQUE,
+                  username    TEXT         NOT NULL UNIQUE,
+                  password    TEXT         NOT NULL,
+                  role        VARCHAR(50)  NOT NULL,
+                  tenant_name TEXT         NOT NULL DEFAULT 'public'
+                                           REFERENCES public.tennants(name),
+                  active      BOOLEAN      NOT NULL DEFAULT TRUE
               );
-
+              
+              ALTER TABLE public.tennants
+                ADD CONSTRAINT fk_tennants_admin_id
+                FOREIGN KEY (admin_id) REFERENCES public.users(id)
+                ON DELETE SET NULL;
+              
               CREATE TABLE IF NOT EXISTS public.invitation_token (
                   id         SERIAL        PRIMARY KEY,
                   email      VARCHAR(255)  NOT NULL,
                   token      VARCHAR(255)  NOT NULL UNIQUE,
+                  tennant    TEXT          REFERENCES public.tennants(name),
                   used       BOOLEAN       DEFAULT FALSE,
                   expires_at TIMESTAMP     NOT NULL
               );
-
+              
               CREATE TABLE IF NOT EXISTS public.password_reset_tokens (
                   id          SERIAL        PRIMARY KEY,
                   user_id     INTEGER       NOT NULL UNIQUE REFERENCES public.users(id),
@@ -56,207 +55,16 @@ databaseChangeLog:
                   created_at  TIMESTAMP     DEFAULT NOW()
               );
 
-  # ═══════════════════════════════════════════════════════════════
-  # 002 — tennant_01 schema: full 10-table schema
-  # ═══════════════════════════════════════════════════════════════
-  - changeSet:
-      id: 002-create-tables-tennant-01
-      author: volodymyr
-      changes:
-        - sql:
-            splitStatements: true
-            sql: |
-              CREATE TABLE IF NOT EXISTS tennant_01.users (
-                  id         SERIAL       PRIMARY KEY,
-                  email      TEXT         NOT NULL UNIQUE,
-                  username   TEXT         NOT NULL UNIQUE,
-                  password   TEXT         NOT NULL,
-                  role       VARCHAR(50)  NOT NULL,
-                  tenant_id  TEXT         NOT NULL,
-                  active     BOOLEAN      NOT NULL DEFAULT TRUE
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_01.projects (
-                  id          SERIAL  PRIMARY KEY,
-                  name        TEXT    NOT NULL UNIQUE,
-                  description TEXT    UNIQUE
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_01.task_types (
-                  id   SERIAL        PRIMARY KEY,
-                  name VARCHAR(255)  NOT NULL
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_01.tasks (
-                  id           SERIAL       PRIMARY KEY,
-                  project_id   INTEGER      NOT NULL REFERENCES tennant_01.projects(id),
-                  summary      TEXT         NOT NULL,
-                  description  TEXT         NOT NULL,
-                  assignee_id  INTEGER      REFERENCES tennant_01.users(id),
-                  initiator_id INTEGER      REFERENCES tennant_01.users(id),
-                  status       VARCHAR(20)  NOT NULL,
-                  task_type_id INTEGER      REFERENCES tennant_01.task_types(id),
-                  created_at   TIMESTAMP    DEFAULT NOW()
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_01.project_users (
-                  id         SERIAL   PRIMARY KEY,
-                  user_id    INTEGER  NOT NULL REFERENCES tennant_01.users(id),
-                  project_id INTEGER  NOT NULL REFERENCES tennant_01.projects(id),
-                  CONSTRAINT uq_project_users_tennant_01 UNIQUE (user_id, project_id)
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_01.project_user_roles (
-                  project_user_id INTEGER      NOT NULL REFERENCES tennant_01.project_users(id),
-                  role            VARCHAR(50)
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_01.comments (
-                  id          SERIAL   PRIMARY KEY,
-                  task_id     INTEGER  NOT NULL REFERENCES tennant_01.tasks(id),
-                  description TEXT     NOT NULL,
-                  author_id   INTEGER  NOT NULL REFERENCES tennant_01.users(id)
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_01.custom_fields (
-                  id    SERIAL        PRIMARY KEY,
-                  name  VARCHAR(255)  NOT NULL,
-                  value TEXT          NOT NULL,
-                  type  VARCHAR(50)   NOT NULL
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_01.invitation_token (
-                  id         SERIAL        PRIMARY KEY,
-                  email      VARCHAR(255)  NOT NULL,
-                  token      VARCHAR(255)  NOT NULL UNIQUE,
-                  used       BOOLEAN       DEFAULT FALSE,
-                  expires_at TIMESTAMP     NOT NULL
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_01.password_reset_tokens (
-                  id          SERIAL        PRIMARY KEY,
-                  user_id     INTEGER       NOT NULL UNIQUE REFERENCES tennant_01.users(id),
-                  token       VARCHAR(255)  NOT NULL UNIQUE,
-                  expiry_date TIMESTAMP     NOT NULL,
-                  created_at  TIMESTAMP     DEFAULT NOW()
-              );
-
-  # ═══════════════════════════════════════════════════════════════
-  # 003 — tennant_02 schema: full 10-table schema
-  # ═══════════════════════════════════════════════════════════════
-  - changeSet:
-      id: 003-create-tables-tennant-02
-      author: volodymyr
-      changes:
-        - sql:
-            splitStatements: true
-            sql: |
-              CREATE TABLE IF NOT EXISTS tennant_02.users (
-                  id         SERIAL       PRIMARY KEY,
-                  email      TEXT         NOT NULL UNIQUE,
-                  username   TEXT         NOT NULL UNIQUE,
-                  password   TEXT         NOT NULL,
-                  role       VARCHAR(50)  NOT NULL,
-                  tenant_id  TEXT         NOT NULL,
-                  active     BOOLEAN      NOT NULL DEFAULT TRUE
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_02.projects (
-                  id          SERIAL  PRIMARY KEY,
-                  name        TEXT    NOT NULL UNIQUE,
-                  description TEXT    UNIQUE
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_02.task_types (
-                  id   SERIAL        PRIMARY KEY,
-                  name VARCHAR(255)  NOT NULL
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_02.tasks (
-                  id           SERIAL       PRIMARY KEY,
-                  project_id   INTEGER      NOT NULL REFERENCES tennant_02.projects(id),
-                  summary      TEXT         NOT NULL,
-                  description  TEXT         NOT NULL,
-                  assignee_id  INTEGER      REFERENCES tennant_02.users(id),
-                  initiator_id INTEGER      REFERENCES tennant_02.users(id),
-                  status       VARCHAR(20)  NOT NULL,
-                  task_type_id INTEGER      REFERENCES tennant_02.task_types(id),
-                  created_at   TIMESTAMP    DEFAULT NOW()
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_02.project_users (
-                  id         SERIAL   PRIMARY KEY,
-                  user_id    INTEGER  NOT NULL REFERENCES tennant_02.users(id),
-                  project_id INTEGER  NOT NULL REFERENCES tennant_02.projects(id),
-                  CONSTRAINT uq_project_users_tennant_02 UNIQUE (user_id, project_id)
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_02.project_user_roles (
-                  project_user_id INTEGER      NOT NULL REFERENCES tennant_02.project_users(id),
-                  role            VARCHAR(50)
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_02.comments (
-                  id          SERIAL   PRIMARY KEY,
-                  task_id     INTEGER  NOT NULL REFERENCES tennant_02.tasks(id),
-                  description TEXT     NOT NULL,
-                  author_id   INTEGER  NOT NULL REFERENCES tennant_02.users(id)
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_02.custom_fields (
-                  id    SERIAL        PRIMARY KEY,
-                  name  VARCHAR(255)  NOT NULL,
-                  value TEXT          NOT NULL,
-                  type  VARCHAR(50)   NOT NULL
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_02.invitation_token (
-                  id         SERIAL        PRIMARY KEY,
-                  email      VARCHAR(255)  NOT NULL,
-                  token      VARCHAR(255)  NOT NULL UNIQUE,
-                  used       BOOLEAN       DEFAULT FALSE,
-                  expires_at TIMESTAMP     NOT NULL
-              );
-
-              CREATE TABLE IF NOT EXISTS tennant_02.password_reset_tokens (
-                  id          SERIAL        PRIMARY KEY,
-                  user_id     INTEGER       NOT NULL UNIQUE REFERENCES tennant_02.users(id),
-                  token       VARCHAR(255)  NOT NULL UNIQUE,
-                  expiry_date TIMESTAMP     NOT NULL,
-                  created_at  TIMESTAMP     DEFAULT NOW()
-              );
-
   # ═══════════════════════════════════════════════════════════════════════════════
-  # 004 — Indexes on all schemas
-  #
-  # NOTE: The previous changeset 002-add-indexes referenced a non-existent table
-  # "invitations" (correct name: "invitation_token") and likely failed entirely.
-  # This changeset replaces it with correct, schema-qualified indexes.
+  # 002 — Indexes on schema
   # ═══════════════════════════════════════════════════════════════════════════════
   - changeSet:
-      id: 004-add-indexes
+      id: 002-add-indexes
       author: volodymyr
       changes:
         - sql:
             splitStatements: true
             sql: |
               -- public
-              CREATE INDEX IF NOT EXISTS idx_tasks_project_id_public       ON public.tasks(project_id);
-              CREATE INDEX IF NOT EXISTS idx_tasks_status_public            ON public.tasks(status);
-              CREATE INDEX IF NOT EXISTS idx_tasks_assignee_id_public       ON public.tasks(assignee_id);
               CREATE INDEX IF NOT EXISTS idx_invitation_token_email_public  ON public.invitation_token(email);
               CREATE INDEX IF NOT EXISTS idx_users_email_public             ON public.users(email);
-
-              -- tennant_01
-              CREATE INDEX IF NOT EXISTS idx_tasks_project_id_t01       ON tennant_01.tasks(project_id);
-              CREATE INDEX IF NOT EXISTS idx_tasks_status_t01            ON tennant_01.tasks(status);
-              CREATE INDEX IF NOT EXISTS idx_tasks_assignee_id_t01       ON tennant_01.tasks(assignee_id);
-              CREATE INDEX IF NOT EXISTS idx_invitation_token_email_t01  ON tennant_01.invitation_token(email);
-              CREATE INDEX IF NOT EXISTS idx_users_email_t01             ON tennant_01.users(email);
-
-              -- tennant_02
-              CREATE INDEX IF NOT EXISTS idx_tasks_project_id_t02       ON tennant_02.tasks(project_id);
-              CREATE INDEX IF NOT EXISTS idx_tasks_status_t02            ON tennant_02.tasks(status);
-              CREATE INDEX IF NOT EXISTS idx_tasks_assignee_id_t02       ON tennant_02.tasks(assignee_id);
-              CREATE INDEX IF NOT EXISTS idx_invitation_token_email_t02  ON tennant_02.invitation_token(email);
-              CREATE INDEX IF NOT EXISTS idx_users_email_t02             ON tennant_02.users(email);

@@ -24,6 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
   private final JwtAuthenticationFilter jwtAuthFilter;
   private final UserDetailsService userDetailsService;
   private final JwtService jwtService;
@@ -42,7 +43,8 @@ public class SecurityConfig {
         .cors(Customizer.withDefaults())
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/login", "/api/auth/login", "/api/auth/logout", "/api/auth/register", "/api/auth/reset-password").permitAll()
+            .requestMatchers("/login", "/api/auth/login", "/api/auth/logout", "/api/auth/register",
+                "/api/auth/reset-password", "/api/auth/forgot-password").permitAll()
             .anyRequest().authenticated()
         )
         .sessionManagement(session -> session

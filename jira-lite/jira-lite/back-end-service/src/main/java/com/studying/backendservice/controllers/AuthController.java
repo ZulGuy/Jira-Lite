@@ -61,6 +61,7 @@ public class AuthController {
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
+    setTenant("public");
     String tenant = userService.searchUsers(request.getEmail()).get(0).getTennant();
     setTenant(tenant);
     System.out.println("request login" + request.getEmail() + request.getPassword());
@@ -106,8 +107,7 @@ public class AuthController {
   public ResponseEntity<String> register(@RequestBody AuthRequest request) {
     setTenant("public");
 
-    //Change the comparison logic because now may cause bugs
-    if (userService.searchUsers(request.getEmail()) != null) {
+    if (!userService.searchUsers(request.getEmail()).isEmpty()) {
       return ResponseEntity.badRequest().body("Username already exists");
     }
 

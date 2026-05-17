@@ -23,11 +23,11 @@ export class AuthService {
     return this.user;
   }
 
-  login(credentials: { username: string, password: string }): Observable<any> {
+  login(credentials: { email: string, password: string }): Observable<any> {
     return this.http.post<{ token: string }>(`${this.api}/login`, credentials, { withCredentials: true }).pipe(
       tap(response => {
         const payload = JSON.parse(atob(response.token.split('.')[1]));
-        localStorage.setItem(`tenantId`, payload.tenantId );
+        localStorage.setItem('tenantId', payload.tennantId || 'public');
       })
     );
   }
@@ -43,11 +43,16 @@ export class AuthService {
     });
   }
 
-  switchTenant() {
-    this.http.get(`${this.api}/switch-tenant`, {
+  switchTenant(): Observable<string> {
+    return this.http.get(`${this.api}/switch-tenant`, {
       withCredentials: true,
       responseType: 'text'
-    })
+    }).pipe(
+      tap(msg => {
+        const match = msg.match(/Tenant switched to (.+)$/);
+        if (match) localStorage.setItem('tenantId', match[1].trim());
+      })
+    );
   }
 
   isAuthenticated(): Observable<any> {

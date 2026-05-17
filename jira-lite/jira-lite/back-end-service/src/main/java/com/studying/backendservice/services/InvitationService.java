@@ -28,8 +28,9 @@ public class InvitationService {
     this.userRepository = userRepository;
   }
 
-  @Transactional
   public void sendInvitation(String email) {
+    String currentTenant = TenantContext.getTenantId();
+    TenantContext.setTenantId("public");
     if (userRepository.existsByEmail(email) && userRepository.findByEmail(email).isPresent()
         && !userRepository.findByEmail(email).get().getTenant().equals("public")) {
       throw new IllegalStateException("Користувач з таким email вже зареєстрований.");
@@ -44,41 +45,56 @@ public class InvitationService {
     invitation.setToken(token);
     invitation.setExpiresAt(LocalDateTime.now().plusDays(2));
     invitation.setUsed(false);
-    invitation.setTennant(TenantContext.getTenantId());
+    invitation.setTennant(currentTenant);
 
     tokenRepo.save(invitation);
 
-    String link = "http://localhost:4200/register?token=" + token;
+    String link = "http://localhost:80/register-invite?token=" + token;
 
     String html = "<h3>Запрошення до системи</h3>"
         + "<p>Для завершення реєстрації перейдіть за посиланням:</p>"
         + "<a href=\"" + link + "\">" + link + "</a>";
 
     sendHtmlEmail(email, "Запрошення до системи", html);
+    TenantContext.setTenantId(currentTenant);
   }
 
   public boolean validateToken(String token) {
-    return tokenRepo.findByToken(token)
+    String currentTenant = TenantContext.getTenantId();
+    TenantContext.setTenantId("public");
+    boolean result = tokenRepo.findByToken(token)
         .filter(t -> !t.isUsed() && t.getExpiresAt().isAfter(LocalDateTime.now()))
         .isPresent();
+    TenantContext.setTenantId(currentTenant);
+    return result;
   }
 
   public String getEmailByToken(String token) {
-    return tokenRepo.findByToken(token).map(InvitationToken::getEmail)
+    String currentTenant = TenantContext.getTenantId();
+    TenantContext.setTenantId("public");
+    String email = tokenRepo.findByToken(token).map(InvitationToken::getEmail)
         .orElseThrow(() -> new IllegalArgumentException("Невалідний токен"));
+    TenantContext.setTenantId(currentTenant);
+    return email;
   }
 
   public String getTennantByToken(String token) {
-    return tokenRepo.findByToken(token).map(InvitationToken::getTennant)
+    String currentTenant = TenantContext.getTenantId();
+    TenantContext.setTenantId("public");
+    String tenant = tokenRepo.findByToken(token).map(InvitationToken::getTennant)
         .orElseThrow(() -> new IllegalArgumentException("Невалідний токен"));
+    TenantContext.setTenantId(currentTenant);
+    return tenant;
   }
 
-  @Transactional
   public void markUsed(String token) {
+    String currentTenant = TenantContext.getTenantId();
+    TenantContext.setTenantId("public");
     InvitationToken invitation = tokenRepo.findByToken(token)
         .orElseThrow(() -> new IllegalArgumentException("Невалідний токен"));
     invitation.setUsed(true);
     tokenRepo.save(invitation);
+    TenantContext.setTenantId(currentTenant);
   }
 
   private void sendHtmlEmail(String to, String subject, String htmlContent) {

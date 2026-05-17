@@ -8,6 +8,7 @@ import com.studying.backendservice.models.User;
 import com.studying.backendservice.repositories.TennantRepository;
 import com.studying.backendservice.repositories.UserRepository;
 import com.studying.backendservice.utils.Role;
+import com.studying.backendservice.utils.TennantCreationUtil;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
@@ -26,19 +27,22 @@ public class TennantServiceImpl implements TennantService {
   private final JdbcTemplate jdbcTemplate;
   private final TennantRepository tennantRepository;
   private final UserServiceImpl userService;
+  private final TennantCreationUtil tennantCreationUtil;
   private static final Pattern VALID_NAME = Pattern.compile("^[a-z][a-z0-9_]{2,29}$");
 
   @Autowired
   public TennantServiceImpl(JdbcTemplate jdbcTemplate, TennantRepository tennantRepository,
-      UserServiceImpl userService) {
+      UserServiceImpl userService,  TennantCreationUtil tennantCreationUtil) {
     this.jdbcTemplate = jdbcTemplate;
     this.tennantRepository = tennantRepository;
     this.userService = userService;
+    this.tennantCreationUtil = tennantCreationUtil;
   }
 
   @Override
   public List<TennantDTO> getAllTennants() {
     return tennantRepository.findAll().stream()
+        .filter(t -> !t.getName().equals("public"))
         .map(this::toDto)
         .toList();
   }
@@ -49,13 +53,32 @@ public class TennantServiceImpl implements TennantService {
   }
 
   @Override
-  @Transactional
   public TennantDTO createTennant(String name, int adminId) throws AccessDeniedException {
-    if (userService.getCurrentUser().getTennant() != "public" && userService.getCurrentUser().getTennant() != null) {
+    if (!userService.getCurrentUser().getTennant().equals("public")
+        && userService.getCurrentUser().getTennant() != null) {
       throw new AccessDeniedException("You are not allowed to create tennant");
     }
     validateName(name);
+    createSchema(name);
 
+    TennantDTO tennantDTO = tennantCreationUtil.savePublicMetadata(name, adminId);
+    UserDTO admin = userService.getUserById(adminId);
+    admin.setRole(Role.ROLE_ADMIN);
+    TenantContext.setTenantId(name);
+    try {
+      tennantCreationUtil.copyUserToTenant(admin);
+    }  catch (Exception e) {
+      TenantContext.setTenantId("public");
+      tennantCreationUtil.compensation(tennantDTO, adminId);
+      jdbcTemplate.execute("DROP SCHEMA IF EXISTS " + name + " CASCADE");
+      throw new RuntimeException("Failed to copy user to tenant schema", e);
+    } finally {
+      TenantContext.setTenantId("public");
+    }
+    return tennantDTO;
+  }
+
+  public void createSchema(String name) {
     List<String> statements = loadDdl(name);
     try {
       for (String sql : statements) {
@@ -65,20 +88,12 @@ public class TennantServiceImpl implements TennantService {
       jdbcTemplate.execute("DROP SCHEMA IF EXISTS " + name + " CASCADE");
       throw new RuntimeException("Failed to create tenant schema: " + name, e);
     }
-
-    Tennant tennant = new Tennant(name, adminId);
-    TennantDTO tennantDTO = toDto(tennantRepository.save(tennant));
-    UserDTO admin = userService.getUserById(adminId);
-    admin.setTennant(name);
-    userService.save(admin);
-    TenantContext.setTenantId(name);
-    admin.setRole(Role.ROLE_ADMIN);
-    userService.save(admin);
-    TenantContext.setTenantId("public");
-    return tennantDTO;
   }
 
-  private void validateName(String name) {
+
+
+
+    private void validateName(String name) {
     if (name == null || !VALID_NAME.matcher(name).matches()) {
       throw new IllegalArgumentException("Invalid tenant name: '" + name + "'. Use 3-30 lowercase letters, digits, or underscores.");
     }
@@ -95,7 +110,7 @@ public class TennantServiceImpl implements TennantService {
           .replace("{schema}", schema);
       return Arrays.stream(sql.split(";"))
           .map(String::trim)
-          .filter(String::isBlank)
+          .filter(s -> !s.isBlank())
           .toList();
     } catch (Exception e) {
       throw new RuntimeException("Cannot load tenant DDL template", e);

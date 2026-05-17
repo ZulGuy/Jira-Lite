@@ -15,7 +15,6 @@ export class CommentService {
   }
 
   addComment(taskId: number, description: string): Observable<CommentDTO> {
-    // task:{id: taskId} — бо бекенд чекає обʼєкт, не просто id
     return this.http.post<CommentDTO>(
       this.api,
       { task: { id: taskId }, description },
@@ -30,7 +29,7 @@ export class CommentService {
   addCommentToTask(taskId: number, description: string): Observable<void> {
     return this.http.post<void>(
       `${this.api}/tasks/${taskId}`,
-      { description }, // Ось тут! не content, а description
+      { description },
       { withCredentials: true }
     );
   }

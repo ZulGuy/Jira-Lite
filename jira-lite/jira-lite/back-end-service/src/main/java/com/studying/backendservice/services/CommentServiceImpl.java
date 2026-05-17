@@ -11,6 +11,9 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,9 +39,10 @@ public class CommentServiceImpl implements CommentService {
   @Transactional
   @Override
   public CommentDTO addComment(CommentDTO comment, int taskId) {
-    User author = userRepository.findByEmail(comment.getAuthorName()).orElseThrow(
-        () -> new EntityNotFoundException("User not found")
-    );
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String username = authentication.getName();
+    User author = userRepository.findByUsername(username)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     Task task = taskRepository.findById(taskId).orElseThrow(
         () -> new EntityNotFoundException("Task not found")
     );

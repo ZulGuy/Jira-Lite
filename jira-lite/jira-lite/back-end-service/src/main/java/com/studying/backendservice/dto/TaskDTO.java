@@ -7,8 +7,8 @@ public class TaskDTO {
   private int id;
   private String summary;
   private String description;
-  private int assigneeId;
-  private int initiatorId;
+  private Integer assigneeId;
+  private Integer initiatorId;
   private Status status;
   private int projectId;
   private List<CommentDTO> comments;
@@ -49,23 +49,16 @@ public class TaskDTO {
     return assigneeId;
   }
 
-  public void setAssigneeId(Integer assigneeId) {
-    this.assigneeId = assigneeId;
-  }
 
   public Integer getInitiatorId() {
     return initiatorId;
   }
 
-  public void setInitiatorId(Integer initiatorId) {
-    this.initiatorId = initiatorId;
-  }
-
-  public void setAssigneeId(int assigneeId) {
+  public void setAssigneeId(Integer assigneeId) {
     this.assigneeId = assigneeId;
   }
 
-  public void setInitiatorId(int initiatorId) {
+  public void setInitiatorId(Integer initiatorId) {
     this.initiatorId = initiatorId;
   }
 

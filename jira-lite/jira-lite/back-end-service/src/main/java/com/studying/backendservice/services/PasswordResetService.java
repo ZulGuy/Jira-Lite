@@ -29,7 +29,7 @@ public class PasswordResetService {
     User user = userRepo.findByEmail(email)
         .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-    //tokenRepo.deleteByUser(user);
+    tokenRepo.deleteByUser(user);
 
     String token = UUID.randomUUID().toString();
     LocalDateTime expiry = LocalDateTime.now().plusHours(2);

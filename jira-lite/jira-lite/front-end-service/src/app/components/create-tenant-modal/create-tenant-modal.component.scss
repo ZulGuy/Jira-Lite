@@ -1,0 +1,41 @@
+@use '../create-task-modal/create-task-modal.component' as *;
+
+.field-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 5px;
+}
+
+.field-error {
+  font-size: 0.75rem;
+  color: var(--danger, #e5534b);
+  margin-top: 4px;
+}
+
+.is-invalid {
+  border-color: var(--danger, #e5534b) !important;
+}
+
+.alert-error {
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background: var(--danger-muted, rgba(229, 83, 75, 0.12));
+  color: var(--danger, #e5534b);
+  font-size: 0.8125rem;
+}
+
+.spinner {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

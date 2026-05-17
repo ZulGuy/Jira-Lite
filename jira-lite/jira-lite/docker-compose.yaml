@@ -11,6 +11,12 @@ services:
     depends_on:
       db-jira-lite:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:8080/ -o /dev/null"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 15s
   frontend:
     build:
       context:
@@ -19,7 +25,8 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
   db-jira-lite:
     image: postgres:16-alpine
     container_name: db-jira-lite

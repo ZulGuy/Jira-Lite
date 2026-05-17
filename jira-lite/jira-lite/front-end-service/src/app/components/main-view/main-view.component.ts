@@ -55,6 +55,11 @@ export class MainViewComponent implements OnInit {
 
 
   drop(event: CdkDragDrop<TaskDTO[]>, newStatus: TaskStatus) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      return;
+    }
+
     const task = event.previousContainer.data[event.previousIndex];
     const oldStatus = task.status;
 
@@ -62,8 +67,6 @@ export class MainViewComponent implements OnInit {
       alert('Задачу можна завершити лише зі статусу "IN_PROGRESS"');
       return;
     }
-
-    if (oldStatus === newStatus) return;
 
     task.status = newStatus;
     transferArrayItem(event.previousContainer.data, event.container.data,
@@ -112,7 +115,7 @@ export class MainViewComponent implements OnInit {
       };
 
       for (const task of tasks) {
-        if (task.status === 'DONE') continue; // ← фільтр
+        if (task.status === 'DONE') continue;
 
         const status = task.status || 'TODO';
         if (columnsMap[status]) {
@@ -123,7 +126,7 @@ export class MainViewComponent implements OnInit {
       this.board.columns = [
         new Column('TODO', columnsMap.TODO),
         new Column('IN_PROGRESS', columnsMap.IN_PROGRESS),
-        new Column('DONE', []) // пустий, бо ми їх не відображаємо
+        new Column('DONE', [])
       ];
     });
   }

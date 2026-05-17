@@ -48,7 +48,7 @@ public class User implements UserDetails {
       regexp = "^[a-zA-Z0-9_]*$",
       message = "Tenant name can only contain letters, numbers, and underscores."
   )
-  private String tenant;
+  private String tenant = "public";
 
   @Column(name = "active", nullable = false)
   private boolean active = true;

@@ -1,4 +1,8 @@
-<div class="page">
+<!-- Public context: workspace management -->
+<app-public-home-page *ngIf="isPublicContext" />
+
+<!-- Tenant context: projects dashboard -->
+<div *ngIf="!isPublicContext" class="page">
   <div class="page-header">
     <div>
       <div class="page-title">Dashboard</div>
