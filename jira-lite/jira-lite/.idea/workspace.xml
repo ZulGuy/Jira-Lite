@@ -5,52 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1848bf9-9361-4765-941f-db9d445696ae" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/CommentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/CustomFieldController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/PasswordResetController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/PasswordResetController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/ProjectUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/ProjectUserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/TaskController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/TaskTypeController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/TennantController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/TennantController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/AddUserToProjectDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/AddUserToProjectDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/AuthRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/AuthRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/AuthResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/AuthResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/CustomFieldDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/ForgotPasswordRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/ForgotPasswordRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/ProjectUserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/ProjectUserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/ResetPasswordRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/ResetPasswordRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/TaskDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/TaskDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/dto/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/CustomField.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/ProjectUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/ProjectUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/TaskType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/Tennant.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/Tennant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/repositories/CustomFieldRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/repositories/TaskTypeRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/CommentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/CommentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/CustomFieldService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/CustomFieldServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/ProjectServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/ProjectServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/ProjectUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/ProjectUserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TaskService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TaskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TaskServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TaskTypeService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TaskTypeServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/utils/FieldType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/target/classes/com/studying/backendservice/BackEndServiceApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/target/classes/db/changelog/db.changelog-master.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/target/classes/db/changelog/db.changelog-master.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/PasswordResetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/PasswordResetService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,29 +55,29 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "dart.analysis.tool.window.visible": "false",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Repository/Jira-Lite/jira-lite/jira-lite",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "show.migrate.to.gradle.popup": "false",
-    "ts.external.directory.path": "C:\\Users\\frost\\AppData\\Roaming\\JetBrains\\IntelliJIdea2026.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Repository/Jira-Lite/jira-lite/jira-lite&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\frost\\AppData\\Roaming\\JetBrains\\IntelliJIdea2026.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Repository\Jira-Lite\jira-lite\jira-lite" />
@@ -136,6 +91,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.24374.151" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.24374.151" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -152,7 +115,8 @@
       <workItem from="1778690453833" duration="1265000" />
       <workItem from="1778877214026" duration="4195000" />
       <workItem from="1778931963475" duration="27000" />
-      <workItem from="1779007129015" duration="7577000" />
+      <workItem from="1779007129015" duration="7689000" />
+      <workItem from="1779014899520" duration="1288000" />
     </task>
     <servers />
   </component>

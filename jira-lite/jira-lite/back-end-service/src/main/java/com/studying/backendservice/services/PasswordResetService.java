@@ -15,9 +15,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class PasswordResetService {
 
+  private final PasswordResetTokenRepository tokenRepo;
+  private final UserRepository userRepo;
+
   @Autowired
-  private PasswordResetTokenRepository tokenRepo;
-  @Autowired private UserRepository userRepo;
+  public PasswordResetService(PasswordResetTokenRepository tokenRepo, UserRepository userRepo) {
+    this.tokenRepo = tokenRepo;
+    this.userRepo = userRepo;
+  }
 
   @Transactional
   public String createResetToken(String email) {
