@@ -6,6 +6,7 @@ import com.studying.backendservice.repositories.CommentRepository;
 import com.studying.backendservice.repositories.ProjectRepository;
 import com.studying.backendservice.repositories.ProjectUserRepository;
 import com.studying.backendservice.repositories.TaskRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,8 +41,9 @@ public class ProjectServiceImpl implements ProjectService {
 
   @Override
   public ProjectDTO getProjectById(int id) {
-    Project project = projectRepository.findById(id).orElseThrow();
-    return toDto(project);
+    return projectRepository.findById(id)
+        .map(this::toDto)
+    .orElseThrow(() -> new EntityNotFoundException("Project not found"));
   }
 
   @Override

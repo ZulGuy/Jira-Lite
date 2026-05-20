@@ -49,7 +49,9 @@ public class TennantServiceImpl implements TennantService {
 
   @Override
   public TennantDTO getTennantByName(String name) {
-    return toDto(tennantRepository.findByName(name));
+    return tennantRepository.findByName(name)
+        .map(this::toDto)
+        .orElseThrow(() -> new EntityNotFoundException("Tennant not found: " + name));
   }
 
   @Override

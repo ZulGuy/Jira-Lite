@@ -43,18 +43,17 @@ public class AuthController {
   private final JwtService jwtService;
   private final UserService userService;
   private final PasswordEncoder passwordEncoder;
-
-  @Autowired
-  private JdbcTemplate jdbcTemplate;
+  private final JdbcTemplate jdbcTemplate;
 
   @Autowired
   public AuthController(
       AuthenticationManager authenticationManager, JwtService jwtService,
-      UserService userService, PasswordEncoder passwordEncoder) {
+      UserService userService, PasswordEncoder passwordEncoder, JdbcTemplate jdbcTemplate) {
     this.authenticationManager = authenticationManager;
     this.jwtService = jwtService;
     this.userService = userService;
     this.passwordEncoder = passwordEncoder;
+    this.jdbcTemplate = jdbcTemplate;
   }
 
   @PostMapping(value = "/login",

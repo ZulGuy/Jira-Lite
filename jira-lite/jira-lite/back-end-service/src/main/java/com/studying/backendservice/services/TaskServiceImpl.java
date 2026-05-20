@@ -67,9 +67,9 @@ public class TaskServiceImpl implements TaskService {
   @Override
   @Transactional(readOnly = true)
   public TaskDTO getTaskById(int id) {
-    Task task = taskRepository.findById(id)
+    return taskRepository.findById(id)
+        .map(this::toDTO)
         .orElseThrow(() -> new EntityNotFoundException("Task not found"));
-    return toDTO(task);
   }
 
   @Override

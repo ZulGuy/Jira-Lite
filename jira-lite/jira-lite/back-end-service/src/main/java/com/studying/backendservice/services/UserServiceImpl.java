@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
   public UserDTO getUserById(int id) {
     return userRepository.findById(id)
         .map(this::toDto)
-        .orElseThrow();
+        .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
   }
 
   @Override
@@ -85,9 +85,9 @@ public class UserServiceImpl implements UserService {
   public UserDTO getCurrentUser() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String username = authentication.getName();
-    User user = userRepository.findByUsername(username)
+    return userRepository.findByUsername(username)
+        .map(this::toDto)
         .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    return toDto(user);
   }
 
   @Override

@@ -62,7 +62,7 @@ public class EmailService {
 
       mailSender.send(message);
     } catch (MessagingException e) {
-      throw new RuntimeException("Не вдалося надіслати лист", e);
+      System.out.println("Помилка при надсиланні листа: " + e);
     }
   }
 }

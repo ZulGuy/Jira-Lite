@@ -11,6 +11,7 @@ import com.studying.backendservice.repositories.ProjectUserRepository;
 import com.studying.backendservice.repositories.UserRepository;
 import com.studying.backendservice.utils.ProjectRole;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -48,8 +49,10 @@ public class ProjectUserServiceImpl implements ProjectUserService {
     if (projectUserRepository.existsByUserIdAndProjectId(dto.userId(), projectId)) {
       throw new IllegalStateException("User was already added to the project.");
     }
-    Project project = projectRepository.findById(projectId).orElseThrow();
-    User user = userRepository.findById(dto.userId()).orElseThrow();
+    Project project = projectRepository.findById(projectId)
+        .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
+    User user = userRepository.findById(dto.userId())
+        .orElseThrow(() -> new EntityNotFoundException("User not found: " + dto.userId()));
     ProjectUser pu = new ProjectUser(project, user, dto.roles());
     projectUserRepository.save(pu);
   }
@@ -58,7 +61,7 @@ public class ProjectUserServiceImpl implements ProjectUserService {
   @Transactional
   public void updateRoles(int projectId, int userId, UpdateProjectRolesDTO dto) {
     ProjectUser pu = projectUserRepository.findByProjectIdAndUserId(projectId, userId)
-        .orElseThrow();
+        .orElseThrow(() -> new EntityNotFoundException("No such project user: " + projectId + ", " + userId));
 
     Set<ProjectRole> newRoles = dto.getRoles() != null ? dto.getRoles() : new java.util.HashSet<>();
 

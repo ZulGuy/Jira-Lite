@@ -106,7 +106,7 @@ public class InvitationService {
       helper.setText(htmlContent, true);
       mailSender.send(message);
     } catch (Exception e) {
-      throw new RuntimeException("Помилка надсилання пошти", e);
+      System.out.println("Помилка при надсиланні запрошення: " + e);
     }
   }
 }

@@ -72,10 +72,9 @@ public class CommentServiceImpl implements CommentService {
 
   @Override
   public CommentDTO getCommentById(int id) {
-    Comment comment = commentRepository.findById(id).orElseThrow(
-        () -> new EntityNotFoundException("Comment not found!")
-    );
-    return toDto(comment);
+    return commentRepository.findById(id)
+        .map(this::toDto)
+        .orElseThrow(() -> new EntityNotFoundException("Comment not found!"));
   }
 
   @Override
