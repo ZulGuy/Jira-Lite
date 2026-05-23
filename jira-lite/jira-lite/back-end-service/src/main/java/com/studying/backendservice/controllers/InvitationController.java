@@ -29,7 +29,11 @@ public class InvitationController {
   @PostMapping("/send")
   @PreAuthorize("@securityService.haveAdminAccess(principal)")
   public ResponseEntity<?> send(@RequestParam String email) {
-    invitationService.sendInvitation(email);
+    try {
+      invitationService.sendInvitation(email);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
     return ResponseEntity.ok("Запрошення надіслано");
   }
 

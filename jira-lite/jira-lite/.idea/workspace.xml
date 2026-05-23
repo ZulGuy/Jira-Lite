@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1848bf9-9361-4765-941f-db9d445696ae" name="Changes" comment="" />
+    <list default="true" id="d1848bf9-9361-4765-941f-db9d445696ae" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/InvitationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/InvitationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/UserServiceImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,6 +47,65 @@
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0065695032441697" />
+      <entry key="MS500" value="1.3660214239864064" />
+      <entry key="S2" value="1.7778155910197349" />
+      <entry key="S5" value="1.9054101586877095" />
+      <entry key="S10" value="1.9945769925703263" />
+      <entry key="S30" value="2.975387297793346" />
+      <entry key="S60" value="4.64806488441854" />
+      <entry key="M2" value="7.338457974712959" />
+      <entry key="M5" value="13.090069815368084" />
+      <entry key="M10" value="19.13769442698802" />
+      <entry key="M15" value="22.879539265175918" />
+      <entry key="M30" value="28.426034784461773" />
+      <entry key="H1" value="32.227985966225006" />
+      <entry key="H2" value="34.47581991076076" />
+      <entry key="H4" value="35.70097461014908" />
+      <entry key="D1" value="36.778148355749785" />
+      <entry key="W1" value="36.968173011481426" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="1.1949856787704693E-14" />
+      <entry key="MS500" value="0.0016423758110424107" />
+      <entry key="S2" value="0.20131140600009317" />
+      <entry key="S5" value="0.5290051825074793" />
+      <entry key="S10" value="0.8118223993731932" />
+      <entry key="S30" value="2.119801750586498" />
+      <entry key="S60" value="3.5585878653952268" />
+      <entry key="M2" value="5.450506900540973" />
+      <entry key="M5" value="8.898745195361357" />
+      <entry key="M10" value="12.238744219257656" />
+      <entry key="M15" value="14.278727025860968" />
+      <entry key="M30" value="17.303035615362816" />
+      <entry key="H1" value="19.381977274974755" />
+      <entry key="H2" value="20.6139558612964" />
+      <entry key="H4" value="21.286351270771036" />
+      <entry key="D1" value="21.878069085429683" />
+      <entry key="W1" value="21.982506400610546" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.008913335032790529" />
+      <entry key="MS500" value="0.4538843274990592" />
+      <entry key="S2" value="1.4271847984313752" />
+      <entry key="S5" value="2.1193771873049956" />
+      <entry key="S10" value="2.6055926248678976" />
+      <entry key="S30" value="4.930172238195197" />
+      <entry key="S60" value="8.062621912228815" />
+      <entry key="M2" value="12.675940296892097" />
+      <entry key="M5" value="21.910585877513725" />
+      <entry key="M10" value="31.319054646038154" />
+      <entry key="M15" value="37.1122734678302" />
+      <entry key="M30" value="45.70028580151195" />
+      <entry key="H1" value="51.593579542614954" />
+      <entry key="H2" value="55.08099472873148" />
+      <entry key="H4" value="56.9827747665969" />
+      <entry key="D1" value="58.65543538929755" />
+      <entry key="W1" value="58.95056709734297" />
+    </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7,
@@ -115,7 +177,8 @@
       <workItem from="1778931963475" duration="27000" />
       <workItem from="1779007129015" duration="7689000" />
       <workItem from="1779014899520" duration="28070000" />
-      <workItem from="1779266285685" duration="634000" />
+      <workItem from="1779266285685" duration="2452000" />
+      <workItem from="1779556092929" duration="689000" />
     </task>
     <servers />
   </component>

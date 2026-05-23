@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
   @Transactional
   public UserDTO toggleActive(int id) {
     User user = userRepository.findById(id)
-        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        .orElseThrow(() -> new UsernameNotFoundException("User not found: " + id));
     user.setEnabled(!user.isEnabled());
     userRepository.save(user);
     return toDto(user);

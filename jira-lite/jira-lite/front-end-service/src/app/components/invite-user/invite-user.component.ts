@@ -23,8 +23,8 @@ export class InviteUserComponent {
 
     this.http.post(`${this.api}/invitations/send?email=${this.email}`, null, { withCredentials: true })
     .subscribe({
-      next: () => {
-        this.message = 'Запрошення надіслано!';
+      next: req => {
+        this.message = req.body;
         this.email = '';
       },
       error: err => {
