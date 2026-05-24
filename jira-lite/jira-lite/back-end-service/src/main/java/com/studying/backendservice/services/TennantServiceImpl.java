@@ -32,7 +32,7 @@ public class TennantServiceImpl implements TennantService {
 
   @Autowired
   public TennantServiceImpl(JdbcTemplate jdbcTemplate, TennantRepository tennantRepository,
-      UserServiceImpl userService,  TennantCreationUtil tennantCreationUtil) {
+      UserServiceImpl userService, TennantCreationUtil tennantCreationUtil) {
     this.jdbcTemplate = jdbcTemplate;
     this.tennantRepository = tennantRepository;
     this.userService = userService;
@@ -69,7 +69,7 @@ public class TennantServiceImpl implements TennantService {
     TenantContext.setTenantId(name);
     try {
       tennantCreationUtil.copyUserToTenant(admin);
-    }  catch (Exception e) {
+    } catch (Exception e) {
       TenantContext.setTenantId("public");
       tennantCreationUtil.compensation(tennantDTO, adminId);
       jdbcTemplate.execute("DROP SCHEMA IF EXISTS " + name + " CASCADE");
@@ -93,11 +93,10 @@ public class TennantServiceImpl implements TennantService {
   }
 
 
-
-
-    private void validateName(String name) {
+  private void validateName(String name) {
     if (name == null || !VALID_NAME.matcher(name).matches()) {
-      throw new IllegalArgumentException("Invalid tenant name: '" + name + "'. Use 3-30 lowercase letters, digits, or underscores.");
+      throw new IllegalArgumentException("Invalid tenant name: '" + name
+          + "'. Use 3-30 lowercase letters, digits, or underscores.");
     }
 
     if (name.equals("public") || name.startsWith("pg_")) {
@@ -120,8 +119,12 @@ public class TennantServiceImpl implements TennantService {
   }
 
   @Override
+  @Transactional
   public void deleteTennant(int id) {
+    Tennant tennant = tennantRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Tennant not found"));
     tennantRepository.deleteById(id);
+    jdbcTemplate.execute("DROP SCHEMA IF EXISTS " + tennant.getName() + " CASCADE");
   }
 
   @Override

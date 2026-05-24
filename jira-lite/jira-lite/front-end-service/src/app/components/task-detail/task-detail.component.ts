@@ -7,6 +7,7 @@ import { TaskDTO, UserDTO, CommentDTO } from '../../types/api.types';
 import {AuthService} from "../../services/auth.service";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import Swal from "sweetalert2";
 
 @Component({
   standalone: true,
@@ -76,8 +77,8 @@ export class TaskDetailComponent implements OnInit {
 
   save() {
     this.taskService.updateTask(this.task).subscribe({
-      next: () => alert('Збережено!'),
-      error: (err) => alert('Помилка збереження: ' + (err?.error?.message || err?.status || 'невідома помилка'))
+      next: () => Swal.fire('Збережено!'),
+      error: (err) => Swal.fire('Помилка збереження: ' + (err?.error?.message || err?.status || 'невідома помилка'))
     });
   }
 

@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2'
 
 @Component({
   standalone: true,
@@ -31,7 +32,7 @@ export class LoginComponent {
       },
       error: () => {
         this.loginFailed = true;
-        alert('Не вдалося авторизуватись. Перевірте логін та пароль.');
+        Swal.fire({text: 'Не вдалося авторизуватись. Перевірте логін та пароль.', icon: 'error'});
       }
     });
   }

@@ -5,8 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1848bf9-9361-4765-941f-db9d445696ae" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/InvitationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/InvitationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/models/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/resources/db/changelog/db.changelog-master.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/resources/db/changelog/db.changelog-master.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/resources/db/tenant-template.sql" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/resources/db/tenant-template.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end-service/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end-service/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/forgot-password/forgot-password.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/forgot-password/forgot-password.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/invite-user/invite-user.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/invite-user/invite-user.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/main-view/main-view.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/main-view/main-view.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/public-home-page/public-home-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/public-home-page/public-home-page.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/register-invite/register-invite.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/register-invite/register-invite.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/register/register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/register/register.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/task-detail/task-detail.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/task-detail/task-detail.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/user/user.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/user/user.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/components/users/users.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/components/users/users.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end-service/src/app/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end-service/src/app/services/user.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,7 +30,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="241" />
+    <option name="cachedIndexableFilesCount" value="326" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
@@ -50,61 +66,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0065695032441697" />
-      <entry key="MS500" value="1.3660214239864064" />
-      <entry key="S2" value="1.7778155910197349" />
-      <entry key="S5" value="1.9054101586877095" />
-      <entry key="S10" value="1.9945769925703263" />
-      <entry key="S30" value="2.975387297793346" />
-      <entry key="S60" value="4.64806488441854" />
-      <entry key="M2" value="7.338457974712959" />
-      <entry key="M5" value="13.090069815368084" />
-      <entry key="M10" value="19.13769442698802" />
-      <entry key="M15" value="22.879539265175918" />
-      <entry key="M30" value="28.426034784461773" />
-      <entry key="H1" value="32.227985966225006" />
-      <entry key="H2" value="34.47581991076076" />
-      <entry key="H4" value="35.70097461014908" />
-      <entry key="D1" value="36.778148355749785" />
-      <entry key="W1" value="36.968173011481426" />
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="8.642467609944233E-119" />
+      <entry key="S2" value="3.049014151975162E-30" />
+      <entry key="S5" value="1.561937946699743E-12" />
+      <entry key="S10" value="1.2497753518825936E-6" />
+      <entry key="S30" value="0.010890665360801691" />
+      <entry key="S60" value="0.12418119467374288" />
+      <entry key="M2" value="0.6548882174697465" />
+      <entry key="M5" value="3.4867191043191217" />
+      <entry key="M10" value="10.485329961650335" />
+      <entry key="M15" value="18.977910244318974" />
+      <entry key="M30" value="43.31885958847014" />
+      <entry key="H1" value="75.77402132598162" />
+      <entry key="H2" value="106.10419406244935" />
+      <entry key="H4" value="127.80968948187898" />
+      <entry key="D1" value="150.75893229136727" />
+      <entry key="W1" value="155.23656282285984" />
     </decayedCancelled>
     <decayedSelected>
-      <entry key="MS100" value="1.1949856787704693E-14" />
-      <entry key="MS500" value="0.0016423758110424107" />
-      <entry key="S2" value="0.20131140600009317" />
-      <entry key="S5" value="0.5290051825074793" />
-      <entry key="S10" value="0.8118223993731932" />
-      <entry key="S30" value="2.119801750586498" />
-      <entry key="S60" value="3.5585878653952268" />
-      <entry key="M2" value="5.450506900540973" />
-      <entry key="M5" value="8.898745195361357" />
-      <entry key="M10" value="12.238744219257656" />
-      <entry key="M15" value="14.278727025860968" />
-      <entry key="M30" value="17.303035615362816" />
-      <entry key="H1" value="19.381977274974755" />
-      <entry key="H2" value="20.6139558612964" />
-      <entry key="H4" value="21.286351270771036" />
-      <entry key="D1" value="21.878069085429683" />
-      <entry key="W1" value="21.982506400610546" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.000000000000068" />
+      <entry key="S10" value="1.0000003670982278" />
+      <entry key="S30" value="1.0113535453696223" />
+      <entry key="S60" value="1.1506679715772525" />
+      <entry key="M2" value="1.5494137938418797" />
+      <entry key="M5" value="2.2974078967120013" />
+      <entry key="M10" value="3.7456857630557785" />
+      <entry key="M15" value="5.737034857896299" />
+      <entry key="M30" value="11.927725450799565" />
+      <entry key="H1" value="21.342632512297058" />
+      <entry key="H2" value="31.199479213915893" />
+      <entry key="H4" value="38.73809446491194" />
+      <entry key="D1" value="47.0568442641442" />
+      <entry key="W1" value="48.716022832401755" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.008913335032790529" />
-      <entry key="MS500" value="0.4538843274990592" />
-      <entry key="S2" value="1.4271847984313752" />
-      <entry key="S5" value="2.1193771873049956" />
-      <entry key="S10" value="2.6055926248678976" />
-      <entry key="S30" value="4.930172238195197" />
-      <entry key="S60" value="8.062621912228815" />
-      <entry key="M2" value="12.675940296892097" />
-      <entry key="M5" value="21.910585877513725" />
-      <entry key="M10" value="31.319054646038154" />
-      <entry key="M15" value="37.1122734678302" />
-      <entry key="M30" value="45.70028580151195" />
-      <entry key="H1" value="51.593579542614954" />
-      <entry key="H2" value="55.08099472873148" />
-      <entry key="H4" value="56.9827747665969" />
-      <entry key="D1" value="58.65543538929755" />
-      <entry key="W1" value="58.95056709734297" />
+      <entry key="MS100" value="1.0553432999363583E-4" />
+      <entry key="MS500" value="0.1602059905200241" />
+      <entry key="S2" value="0.6326589960856887" />
+      <entry key="S5" value="0.8326603316483361" />
+      <entry key="S10" value="0.912503763479946" />
+      <entry key="S30" value="0.9916287821314081" />
+      <entry key="S60" value="1.2562491460257472" />
+      <entry key="M2" value="2.1904094257606372" />
+      <entry key="M5" value="5.773325602570621" />
+      <entry key="M10" value="14.214846991488452" />
+      <entry key="M15" value="24.693141191301407" />
+      <entry key="M30" value="55.21891266443891" />
+      <entry key="H1" value="97.09106889253825" />
+      <entry key="H2" value="137.2851161504699" />
+      <entry key="H4" value="166.53637576971184" />
+      <entry key="D1" value="197.8134916633208" />
+      <entry key="W1" value="203.95224842801204" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -115,29 +131,29 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Repository/Jira-Lite/jira-lite/jira-lite&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2025.1.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Repository/Jira-Lite/jira-lite/jira-lite",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "show.migrate.to.gradle.popup": "false",
+    "ts.external.directory.path": "D:\\Repository\\Jira-Lite\\jira-lite\\jira-lite\\front-end-service\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Repository\Jira-Lite\jira-lite\jira-lite" />
@@ -155,8 +171,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.24374.151" />
-        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.24374.151" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.23567.141" />
       </set>
     </attachedChunks>
   </component>
@@ -178,7 +193,8 @@
       <workItem from="1779007129015" duration="7689000" />
       <workItem from="1779014899520" duration="28070000" />
       <workItem from="1779266285685" duration="2452000" />
-      <workItem from="1779556092929" duration="689000" />
+      <workItem from="1779556092929" duration="1254000" />
+      <workItem from="1779645012973" duration="8205000" />
     </task>
     <servers />
   </component>

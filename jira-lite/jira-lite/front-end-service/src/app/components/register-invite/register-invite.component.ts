@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {environment} from "../../../environments/environment";
 import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
+import Swal from "sweetalert2";
 
 @Component({
   standalone: true,
@@ -32,8 +33,8 @@ export class RegisterInviteComponent implements OnInit {
   submit() {
     this.http.post(`${this.api}/invitations/register?token=` + this.token, this.user, { withCredentials: true })
     .subscribe({
-      next: () => alert('Успішно!'),
-      error: err => alert(err.error || 'Помилка')
+      next: () => Swal.fire({text: 'Успішно!', icon: 'success'}),
+      error: err => Swal.fire({text: err.error || 'Помилка', icon: 'error'})
     });
   }
 }

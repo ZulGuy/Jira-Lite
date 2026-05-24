@@ -3,6 +3,7 @@ import {AuthService} from "../../services/auth.service";
 import {Router, RouterLink} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
+import Swal from "sweetalert2";
 
 @Component({
   standalone: true,
@@ -22,7 +23,7 @@ export class RegisterComponent {
   submit() {
     this.authService.register(this.form).subscribe({
       next: () => {
-        alert('✅ Registered!');
+        Swal.fire({text: 'Registered!', icon: 'success'});
         setTimeout(() => this.router.navigate(['/login']), 100); // ← тестова затримка
       },
       error: err => {
@@ -30,7 +31,7 @@ export class RegisterComponent {
         const msg = typeof err.error === 'string'
           ? err.error
           : err.error?.message || 'Registration failed';
-        alert(msg);
+        Swal.fire({text: msg, icon: 'error'});
       }
     });
   }

@@ -9,6 +9,7 @@ import {AuthService} from "../../services/auth.service";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {CreateTaskModalComponent} from "../create-task-modal/create-task-modal.component";
+import Swal from "sweetalert2";
 
 @Component({
   standalone: true,
@@ -64,7 +65,7 @@ export class MainViewComponent implements OnInit {
     const oldStatus = task.status;
 
     if (newStatus === 'DONE' && oldStatus !== 'IN_PROGRESS') {
-      alert('Задачу можна завершити лише зі статусу "IN_PROGRESS"');
+      Swal.fire('Задачу можна завершити лише зі статусу "IN_PROGRESS"');
       return;
     }
 

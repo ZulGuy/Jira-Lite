@@ -29,7 +29,7 @@ databaseChangeLog:
                   password    TEXT         NOT NULL,
                   role        VARCHAR(50)  NOT NULL,
                   tenant_name TEXT         NOT NULL DEFAULT 'public'
-                                           REFERENCES public.tennants(name),
+                                           REFERENCES public.tennants(name) ON DELETE SET DEFAULT,
                   active      BOOLEAN      NOT NULL DEFAULT TRUE
               );
               

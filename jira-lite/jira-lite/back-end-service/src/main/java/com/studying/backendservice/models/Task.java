@@ -53,7 +53,7 @@ public class Task {
   @JoinColumn(name = "assignee_id")
   private User assignee;
 
-  @ManyToOne
+  @ManyToOne()
   @JoinColumn(name = "initiator_id")
   private User initiator;
 

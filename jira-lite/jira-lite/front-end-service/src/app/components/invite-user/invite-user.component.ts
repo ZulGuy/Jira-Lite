@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Component} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {environment} from "../../../environments/environment";
 import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
@@ -16,15 +16,19 @@ export class InviteUserComponent {
   message = '';
   private api = `${environment.apiUrl}/api`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   sendInvitation() {
     if (!this.email.trim()) return;
 
-    this.http.post(`${this.api}/invitations/send?email=${this.email}`, null, { withCredentials: true })
+    this.http.post(`${this.api}/invitations/send?email=${this.email}`, null, {
+      withCredentials: true,
+      responseType: 'text'
+    })
     .subscribe({
       next: req => {
-        this.message = req.body;
+        this.message = req;
         this.email = '';
       },
       error: err => {

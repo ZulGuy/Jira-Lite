@@ -5,6 +5,7 @@ import {UserDTO} from "../../types/api.types";
 import {AuthService} from "../../services/auth.service";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import Swal from "sweetalert2";
 
 @Component({
   standalone: true,
@@ -29,8 +30,8 @@ export class UserComponent implements OnInit {
 
   updateRole() {
     this.userService.updateUser(this.user).subscribe({
-      next: () => alert('Роль оновлено успішно'),
-      error: err => alert('Помилка при оновленні ролі: ' + (err?.error?.message || err.message))
+      next: () => Swal.fire('Роль оновлено успішно'),
+      error: err => Swal.fire('Помилка при оновленні ролі: ' + (err?.error?.message || err.message))
     });
   }
 

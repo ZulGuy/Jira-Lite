@@ -6,14 +6,14 @@ import {AuthService} from "../../services/auth.service";
 import {HttpClient} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import {AddUserModalComponent} from "../add-user-modal/add-user-modal.component";
+import Swal from 'sweetalert2';
 
 @Component({
   standalone: true,
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
-  imports: [CommonModule, FormsModule, AddUserModalComponent]
+  imports: [CommonModule, FormsModule]
 })
 export class UsersComponent implements OnInit {
   users: UserDTO[] = [];
@@ -74,11 +74,27 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(id: number) {
-    if(confirm('Ви впевнені, що хочете видалити цей користувача?')) {
-      this.userService.deleteUser(id).subscribe(() => {
-        this.ngOnInit();
-      });
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.deleteUser(id).subscribe({
+          next: req => {
+            this.ngOnInit();
+            Swal.fire({text: req, icon: 'success'});
+          },
+          error: err => {
+            Swal.fire({text: err.error, icon: 'error'});
+          }
+        });
+      }
+    });
   }
 
   openAddUserModal() {

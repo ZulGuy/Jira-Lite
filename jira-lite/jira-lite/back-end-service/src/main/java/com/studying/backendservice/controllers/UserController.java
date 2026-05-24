@@ -6,6 +6,8 @@ import com.studying.backendservice.services.UserService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,8 +53,12 @@ public class UserController {
   }
 
   @DeleteMapping("/{id}")
-  public void deleteUser(@PathVariable int id) {
+  public ResponseEntity<String> deleteUser(@PathVariable int id) {
+    if (userService.getCurrentUser().getRole().name().equals("ROLE_ADMIN")) {
+      return ResponseEntity.status(403).body("Unable to delete administrator");
+    }
     userService.delete(id);
+    return ResponseEntity.ok("User successfully deleted");
   }
 
   @PutMapping("/{id}")

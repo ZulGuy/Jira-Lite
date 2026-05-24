@@ -18,32 +18,32 @@ CREATE TABLE IF NOT EXISTS {schema}.projects (
 
 CREATE TABLE IF NOT EXISTS {schema}.tasks (
                                               id           SERIAL      PRIMARY KEY,
-                                              project_id   INTEGER     NOT NULL REFERENCES {schema}.projects(id),
+                                              project_id   INTEGER     NOT NULL REFERENCES {schema}.projects(id) ON DELETE CASCADE,
     summary      TEXT        NOT NULL,
     description  TEXT        NOT NULL,
-    assignee_id  INTEGER     REFERENCES {schema}.users(id),
-    initiator_id INTEGER     REFERENCES {schema}.users(id),
+    assignee_id  INTEGER     REFERENCES {schema}.users(id) ON DELETE SET NULL,
+    initiator_id INTEGER     REFERENCES {schema}.users(id) ON DELETE SET NULL,
     status       VARCHAR(20) NOT NULL,
     created_at   TIMESTAMP   DEFAULT NOW()
     );
 
 CREATE TABLE IF NOT EXISTS {schema}.project_users (
                                                       id         SERIAL  PRIMARY KEY,
-                                                      user_id    INTEGER NOT NULL REFERENCES {schema}.users(id),
-    project_id INTEGER NOT NULL REFERENCES {schema}.projects(id),
+                                                      user_id    INTEGER NOT NULL REFERENCES {schema}.users(id) ON DELETE CASCADE,
+    project_id INTEGER NOT NULL REFERENCES {schema}.projects(id) ON DELETE CASCADE,
     CONSTRAINT uq_project_users_{schema} UNIQUE (user_id, project_id)
     );
 
 CREATE TABLE IF NOT EXISTS {schema}.project_user_roles (
-                                                           project_user_id INTEGER     NOT NULL REFERENCES {schema}.project_users(id),
+                                                           project_user_id INTEGER     NOT NULL REFERENCES {schema}.project_users(id) ON DELETE CASCADE,
     role            VARCHAR(50)
     );
 
 CREATE TABLE IF NOT EXISTS {schema}.comments (
                                                  id          SERIAL  PRIMARY KEY,
-                                                 task_id     INTEGER NOT NULL REFERENCES {schema}.tasks(id),
+                                                 task_id     INTEGER NOT NULL REFERENCES {schema}.tasks(id) ON DELETE CASCADE,
     description TEXT    NOT NULL,
-    author_id   INTEGER NOT NULL REFERENCES {schema}.users(id)
+    author_id   INTEGER NOT NULL REFERENCES {schema}.users(id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS {schema}.invitation_token (
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS {schema}.invitation_token (
 
 CREATE TABLE IF NOT EXISTS {schema}.password_reset_tokens (
                                                               id          SERIAL       PRIMARY KEY,
-                                                              user_id     INTEGER      NOT NULL UNIQUE REFERENCES {schema}.users(id),
+                                                              user_id     INTEGER      NOT NULL UNIQUE REFERENCES {schema}.users(id) ON DELETE CASCADE,
     token       VARCHAR(255) NOT NULL UNIQUE,
     expiry_date TIMESTAMP    NOT NULL,
     created_at  TIMESTAMP    DEFAULT NOW()
