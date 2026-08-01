@@ -1,20 +1,17 @@
 package com.studying.backendservice.controllers;
 
-import com.studying.backendservice.configurations.SchemaTenantIdentifierResolver;
 import com.studying.backendservice.configurations.TenantContext;
 import com.studying.backendservice.dto.AuthRequest;
 import com.studying.backendservice.dto.AuthResponse;
 import com.studying.backendservice.dto.UserDTO;
-import com.studying.backendservice.models.User;
-import com.studying.backendservice.repositories.UserRepository;
+import com.studying.backendservice.entities.tenantentities.User;
 import com.studying.backendservice.services.JwtService;
-import com.studying.backendservice.services.TennantServiceImpl;
 import com.studying.backendservice.services.UserService;
 import com.studying.backendservice.utils.Role;
-import io.jsonwebtoken.Claims;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,16 +22,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -63,12 +58,12 @@ public class AuthController {
     setTenant("public");
     String tenant = userService.searchUsers(request.getEmail()).get(0).getTennant();
     setTenant(tenant);
-    System.out.println("request login" + request.getEmail() + request.getPassword());
-    System.out.println("TenantContext: " + TenantContext.getTenantId());
+    log.info("request login {}", request.getEmail());
+    log.info("TenantContext: {}", TenantContext.getTenantId());
     Authentication authentication = authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
     );
-    System.out.println("request login" + request.getEmail() + request.getPassword());
+    log.info("request login {}", request.getEmail());
     var user = (User) authentication.getPrincipal();
     Map<String, Object> claims = new HashMap<>();
     claims.put("tennantId", user.getTenant());

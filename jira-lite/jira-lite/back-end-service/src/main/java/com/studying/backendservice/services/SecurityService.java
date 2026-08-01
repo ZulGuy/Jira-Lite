@@ -1,16 +1,12 @@
 package com.studying.backendservice.services;
 
 import com.studying.backendservice.dto.UserDTO;
-import com.studying.backendservice.models.ProjectUser;
-import com.studying.backendservice.models.User;
-import com.studying.backendservice.repositories.CommentRepository;
-import com.studying.backendservice.repositories.ProjectRepository;
-import com.studying.backendservice.repositories.ProjectUserRepository;
-import com.studying.backendservice.repositories.TaskRepository;
+import com.studying.backendservice.entities.tenantentities.User;
+import com.studying.backendservice.repositories.tenantrepos.CommentRepository;
+import com.studying.backendservice.repositories.tenantrepos.ProjectUserRepository;
+import com.studying.backendservice.repositories.tenantrepos.TaskRepository;
 import com.studying.backendservice.utils.ProjectRole;
 import jakarta.transaction.Transactional;
-import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("securityService")

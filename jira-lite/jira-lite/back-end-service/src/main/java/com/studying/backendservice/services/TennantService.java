@@ -1,7 +1,7 @@
 package com.studying.backendservice.services;
 
 import com.studying.backendservice.dto.TennantDTO;
-import com.studying.backendservice.models.Tennant;
+import com.studying.backendservice.entities.publicentities.Tennant;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 

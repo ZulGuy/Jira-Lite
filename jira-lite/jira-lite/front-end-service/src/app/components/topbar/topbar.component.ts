@@ -1,7 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {CommonModule} from "@angular/common";
 import {RouterLink, RouterLinkActive} from "@angular/router";
+import {TenantDTO} from "../../types/api.types";
+import {TennantService} from "../../services/tennant.service";
 
 @Component({
   standalone: true,
@@ -12,7 +14,11 @@ import {RouterLink, RouterLinkActive} from "@angular/router";
 })
 export class TopbarComponent {
 
-  constructor(private authService: AuthService) {}
+  tenant = signal<TenantDTO | null>(null);
+  tenantLoading = signal(true);
+  switching = signal(false);
+
+  constructor(private authService: AuthService, private tennantService: TennantService) {}
 
   isPublicPage(): boolean {
     return (localStorage.getItem('tenantId') ?? 'public') === 'public';
@@ -20,5 +26,21 @@ export class TopbarComponent {
 
   canManageUsers(): boolean {
     return this.authService.isSystemAdmin();
+  }
+
+  switchTenant(): void {
+    this.switching.set(true);
+    this.authService.switchTenant().subscribe({
+      next: () => { window.location.href = '/'; },
+      error: () => this.switching.set(false)
+    });
+  }
+
+  ngOnInit(): void {
+    this.tennantService.getByName("public").subscribe({
+      next: (t) => {
+        this.tenant.set(t);
+    }
+    });
   }
 }

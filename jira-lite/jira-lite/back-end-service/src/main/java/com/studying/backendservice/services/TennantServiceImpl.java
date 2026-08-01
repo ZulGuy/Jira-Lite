@@ -3,10 +3,8 @@ package com.studying.backendservice.services;
 import com.studying.backendservice.configurations.TenantContext;
 import com.studying.backendservice.dto.TennantDTO;
 import com.studying.backendservice.dto.UserDTO;
-import com.studying.backendservice.models.Tennant;
-import com.studying.backendservice.models.User;
-import com.studying.backendservice.repositories.TennantRepository;
-import com.studying.backendservice.repositories.UserRepository;
+import com.studying.backendservice.entities.publicentities.Tennant;
+import com.studying.backendservice.repositories.publicrepos.TennantRepository;
 import com.studying.backendservice.utils.Role;
 import com.studying.backendservice.utils.TennantCreationUtil;
 import jakarta.persistence.EntityNotFoundException;
@@ -41,17 +39,29 @@ public class TennantServiceImpl implements TennantService {
 
   @Override
   public List<TennantDTO> getAllTennants() {
-    return tennantRepository.findAll().stream()
-        .filter(t -> !t.getName().equals("public"))
-        .map(this::toDto)
-        .toList();
+    String previousTenant = TenantContext.getTenantId();
+    TenantContext.setTenantId("public");
+    try {
+      return tennantRepository.findAll().stream()
+          .filter(t -> !t.getName().equals("public"))
+          .map(this::toDto)
+          .toList();
+    } finally {
+      TenantContext.setTenantId(previousTenant);
+    }
   }
 
   @Override
   public TennantDTO getTennantByName(String name) {
-    return tennantRepository.findByName(name)
-        .map(this::toDto)
-        .orElseThrow(() -> new EntityNotFoundException("Tennant not found: " + name));
+    String previousTenant = TenantContext.getTenantId();
+    TenantContext.setTenantId("public");
+    try {
+      return tennantRepository.findByName(name)
+          .map(this::toDto)
+          .orElseThrow(() -> new EntityNotFoundException("Tennant not found: " + name));
+    } finally {
+      TenantContext.setTenantId(previousTenant);
+    }
   }
 
   @Override
@@ -121,10 +131,16 @@ public class TennantServiceImpl implements TennantService {
   @Override
   @Transactional
   public void deleteTennant(int id) {
-    Tennant tennant = tennantRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("Tennant not found"));
-    tennantRepository.deleteById(id);
-    jdbcTemplate.execute("DROP SCHEMA IF EXISTS " + tennant.getName() + " CASCADE");
+    String previousTenant = TenantContext.getTenantId();
+    TenantContext.setTenantId("public");
+    try {
+      Tennant tennant = tennantRepository.findById(id)
+          .orElseThrow(() -> new EntityNotFoundException("Tennant not found"));
+      tennantRepository.deleteById(id);
+      jdbcTemplate.execute("DROP SCHEMA IF EXISTS " + tennant.getName() + " CASCADE");
+    } finally {
+      TenantContext.setTenantId(previousTenant);
+    }
   }
 
   @Override
@@ -132,7 +148,7 @@ public class TennantServiceImpl implements TennantService {
     TennantDTO dto = new TennantDTO();
     dto.setId(tennant.getId());
     dto.setName(tennant.getName());
-    dto.setAdminId(tennant.getAdminId());
+    dto.setAdminId(tennant.getAdminId() == null ? 0 : tennant.getAdminId());
     dto.setStatus(tennant.isEnabled());
     return dto;
   }

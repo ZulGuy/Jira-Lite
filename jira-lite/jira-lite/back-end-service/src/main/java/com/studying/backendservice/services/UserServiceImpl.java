@@ -1,14 +1,10 @@
 package com.studying.backendservice.services;
 
 import com.studying.backendservice.dto.UserDTO;
-import com.studying.backendservice.models.PasswordResetToken;
-import com.studying.backendservice.models.User;
-import com.studying.backendservice.repositories.PasswordResetTokenRepository;
-import com.studying.backendservice.repositories.UserRepository;
+import com.studying.backendservice.entities.tenantentities.User;
+import com.studying.backendservice.repositories.tenantrepos.UserRepository;
 import com.studying.backendservice.utils.Role;
 import jakarta.persistence.EntityNotFoundException;
-import java.time.LocalDateTime;
-import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;

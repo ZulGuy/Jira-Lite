@@ -1,7 +1,7 @@
 package com.studying.backendservice.services;
 
 import com.studying.backendservice.dto.TaskDTO;
-import com.studying.backendservice.models.Task;
+import com.studying.backendservice.entities.tenantentities.Task;
 import java.util.List;
 
 public interface TaskService {

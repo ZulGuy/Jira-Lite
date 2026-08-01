@@ -1,9 +1,9 @@
 package com.studying.backendservice.services;
 
-import com.studying.backendservice.models.PasswordResetToken;
-import com.studying.backendservice.models.User;
-import com.studying.backendservice.repositories.PasswordResetTokenRepository;
-import com.studying.backendservice.repositories.UserRepository;
+import com.studying.backendservice.entities.tenantentities.PasswordResetToken;
+import com.studying.backendservice.entities.tenantentities.User;
+import com.studying.backendservice.repositories.tenantrepos.PasswordResetTokenRepository;
+import com.studying.backendservice.repositories.tenantrepos.UserRepository;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.UUID;

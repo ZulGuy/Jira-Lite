@@ -1,12 +1,12 @@
 package com.studying.backendservice.services;
 
 import com.studying.backendservice.dto.CommentDTO;
-import com.studying.backendservice.models.Comment;
-import com.studying.backendservice.models.Task;
-import com.studying.backendservice.models.User;
-import com.studying.backendservice.repositories.CommentRepository;
-import com.studying.backendservice.repositories.TaskRepository;
-import com.studying.backendservice.repositories.UserRepository;
+import com.studying.backendservice.entities.tenantentities.Comment;
+import com.studying.backendservice.entities.tenantentities.Task;
+import com.studying.backendservice.entities.tenantentities.User;
+import com.studying.backendservice.repositories.tenantrepos.CommentRepository;
+import com.studying.backendservice.repositories.tenantrepos.TaskRepository;
+import com.studying.backendservice.repositories.tenantrepos.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import java.util.List;

@@ -2,8 +2,6 @@ package com.studying.backendservice.services;
 
 import com.studying.backendservice.dto.CommentDTO;
 import com.studying.backendservice.dto.TaskDTO;
-import com.studying.backendservice.models.Comment;
-import com.studying.backendservice.models.Task;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;

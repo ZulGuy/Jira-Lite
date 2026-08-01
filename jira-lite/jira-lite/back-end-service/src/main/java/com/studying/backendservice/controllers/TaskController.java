@@ -2,15 +2,9 @@ package com.studying.backendservice.controllers;
 
 import com.studying.backendservice.dto.CommentDTO;
 import com.studying.backendservice.dto.TaskDTO;
-import com.studying.backendservice.models.Project;
-import com.studying.backendservice.models.Task;
-import com.studying.backendservice.models.User;
-import com.studying.backendservice.repositories.ProjectRepository;
-import com.studying.backendservice.repositories.TaskRepository;
-import com.studying.backendservice.repositories.UserRepository;
+import com.studying.backendservice.entities.tenantentities.User;
 import com.studying.backendservice.services.EmailService;
 import com.studying.backendservice.services.TaskService;
-import com.studying.backendservice.utils.Status;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,10 +1,9 @@
 package com.studying.backendservice.utils;
 
-import com.studying.backendservice.configurations.TenantContext;
 import com.studying.backendservice.dto.TennantDTO;
 import com.studying.backendservice.dto.UserDTO;
-import com.studying.backendservice.models.Tennant;
-import com.studying.backendservice.repositories.TennantRepository;
+import com.studying.backendservice.entities.publicentities.Tennant;
+import com.studying.backendservice.repositories.publicrepos.TennantRepository;
 import com.studying.backendservice.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,7 @@
 package com.studying.backendservice.controllers;
 
 import com.studying.backendservice.dto.CommentDTO;
-import com.studying.backendservice.models.Comment;
-import com.studying.backendservice.repositories.UserRepository;
 import com.studying.backendservice.services.CommentService;
-import com.studying.backendservice.services.TaskService;
-import com.studying.backendservice.services.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

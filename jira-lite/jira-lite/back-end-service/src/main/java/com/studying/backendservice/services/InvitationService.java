@@ -1,11 +1,10 @@
 package com.studying.backendservice.services;
 
 import com.studying.backendservice.configurations.TenantContext;
-import com.studying.backendservice.models.InvitationToken;
-import com.studying.backendservice.repositories.InvitationTokenRepository;
-import com.studying.backendservice.repositories.UserRepository;
+import com.studying.backendservice.entities.tenantentities.InvitationToken;
+import com.studying.backendservice.repositories.tenantrepos.InvitationTokenRepository;
+import com.studying.backendservice.repositories.tenantrepos.UserRepository;
 import jakarta.mail.internet.MimeMessage;
-import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;

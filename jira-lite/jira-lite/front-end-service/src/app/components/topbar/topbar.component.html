@@ -15,6 +15,14 @@
     <a *ngIf="canManageUsers()" class="nav-item" routerLink="/users" routerLinkActive="active">Users</a>
     <a class="nav-item" routerLink="/profile" routerLinkActive="active">Profile</a>
     <a *ngIf="canManageUsers()" class="nav-item" routerLink="/admin/invite" routerLinkActive="active">Invite</a>
+    <button *ngIf="!isPublicPage()"
+      class="nav-item"
+      (click)="switchTenant()"
+      [disabled]="switching() || !tenant()?.status"
+    >
+      <span *ngIf="switching()" class="spinner"></span>
+      {{ switching() ? 'Switching…' : 'Switch to workspace' }}
+    </button>
   </nav>
 
   <div class="topbar-actions">

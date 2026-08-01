@@ -1,7 +1,7 @@
 package com.studying.backendservice.services;
 
 import com.studying.backendservice.dto.CommentDTO;
-import com.studying.backendservice.models.Comment;
+import com.studying.backendservice.entities.tenantentities.Comment;
 import java.util.List;
 
 public interface CommentService {

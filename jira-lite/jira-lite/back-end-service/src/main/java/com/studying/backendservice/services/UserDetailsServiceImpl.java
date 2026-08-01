@@ -1,7 +1,7 @@
 package com.studying.backendservice.services;
 
-import com.studying.backendservice.models.User;
-import com.studying.backendservice.repositories.UserRepository;
+import com.studying.backendservice.entities.tenantentities.User;
+import com.studying.backendservice.repositories.tenantrepos.UserRepository;
 import jakarta.transaction.Transactional;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
