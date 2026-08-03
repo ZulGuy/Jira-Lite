@@ -4,7 +4,7 @@ import com.studying.backendservice.configurations.TenantContext;
 import com.studying.backendservice.dto.AuthRequest;
 import com.studying.backendservice.dto.AuthResponse;
 import com.studying.backendservice.dto.UserDTO;
-import com.studying.backendservice.entities.tenantentities.User;
+import com.studying.backendservice.entities.userentity.User;
 import com.studying.backendservice.services.JwtService;
 import com.studying.backendservice.services.UserService;
 import com.studying.backendservice.utils.Role;

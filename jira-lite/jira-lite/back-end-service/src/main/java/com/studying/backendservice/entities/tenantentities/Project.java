@@ -11,6 +11,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Setter;
 
 @Entity
 @Table(name = "projects")
@@ -21,15 +22,18 @@ public class Project {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
+  @Setter
   @Column(name = "name", unique = true, nullable = false)
   private String name;
 
+  @Setter
   @Column(name = "description", unique = true)
   private String description;
 
   @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
   private List<ProjectUser> projectUsers = new ArrayList<>();
 
+  @Setter
   @JsonManagedReference
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "project")
   private List<Task> tasks = new ArrayList<Task>();
@@ -45,10 +49,6 @@ public class Project {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public int getId() {
     return id;
   }
@@ -57,16 +57,8 @@ public class Project {
     return description;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
   public List<Task> getTasks() {
     return tasks;
-  }
-
-  public void setTasks(List<Task> tasks) {
-    this.tasks = tasks;
   }
 
   public List<ProjectUser> getProjectUsers() {

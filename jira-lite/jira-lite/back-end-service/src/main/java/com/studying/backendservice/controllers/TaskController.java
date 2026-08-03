@@ -2,14 +2,13 @@ package com.studying.backendservice.controllers;
 
 import com.studying.backendservice.dto.CommentDTO;
 import com.studying.backendservice.dto.TaskDTO;
-import com.studying.backendservice.entities.tenantentities.User;
 import com.studying.backendservice.services.EmailService;
 import com.studying.backendservice.services.TaskService;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
@@ -33,13 +33,13 @@ public class TaskController {
   }
 
   @PostMapping
-  public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO dto, @AuthenticationPrincipal User userDetails) {
+  public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO dto) {
 
     TaskDTO createdTask = taskService.createTask(dto);
     emailService.sendTaskCreatedNotification(createdTask);
-    System.out.println("ID of created task" + createdTask.getId());
+    log.info("ID of created task {}", createdTask.getId());
 
-    return ResponseEntity.ok(dto);
+    return ResponseEntity.ok(createdTask);
   }
 
   @GetMapping("/{id}")

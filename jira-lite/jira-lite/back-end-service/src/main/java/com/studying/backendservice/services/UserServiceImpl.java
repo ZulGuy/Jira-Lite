@@ -1,7 +1,8 @@
 package com.studying.backendservice.services;
 
 import com.studying.backendservice.dto.UserDTO;
-import com.studying.backendservice.entities.tenantentities.User;
+import com.studying.backendservice.entities.userentity.User;
+import com.studying.backendservice.repositories.publicrepos.PublicUserRepository;
 import com.studying.backendservice.repositories.tenantrepos.UserRepository;
 import com.studying.backendservice.utils.Role;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,13 +20,15 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
+  private final PublicUserRepository publicUserRepository;
   private final PasswordEncoder encoder;
 
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository, PasswordEncoder encoder) {
+  public UserServiceImpl(UserRepository userRepository, PasswordEncoder encoder, PublicUserRepository publicUserRepository) {
     this.userRepository = userRepository;
     this.encoder = encoder;
+    this.publicUserRepository = publicUserRepository;
   }
 
   @Override
@@ -107,5 +110,20 @@ public class UserServiceImpl implements UserService {
     user.setEnabled(!user.isEnabled());
     userRepository.save(user);
     return toDto(user);
+  }
+
+  public UserDTO getPublicUserById(int id) {
+    return publicUserRepository.findById(id)
+        .map(this::toDto)
+        .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
+  }
+
+  @Transactional(readOnly = true)
+  public UserDTO getPublicCurrentUser() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String username = authentication.getName();
+    return publicUserRepository.findByUsername(username)
+        .map(this::toDto)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
   }
 }

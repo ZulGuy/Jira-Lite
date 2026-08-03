@@ -5,7 +5,7 @@ import com.studying.backendservice.dto.TaskDTO;
 import com.studying.backendservice.entities.tenantentities.Comment;
 import com.studying.backendservice.entities.tenantentities.Project;
 import com.studying.backendservice.entities.tenantentities.Task;
-import com.studying.backendservice.entities.tenantentities.User;
+import com.studying.backendservice.entities.userentity.User;
 import com.studying.backendservice.repositories.tenantrepos.ProjectRepository;
 import com.studying.backendservice.repositories.tenantrepos.TaskRepository;
 import com.studying.backendservice.repositories.tenantrepos.UserRepository;

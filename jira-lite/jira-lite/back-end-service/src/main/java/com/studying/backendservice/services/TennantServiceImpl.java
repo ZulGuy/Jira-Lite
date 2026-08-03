@@ -4,7 +4,7 @@ import com.studying.backendservice.configurations.TenantContext;
 import com.studying.backendservice.dto.TennantDTO;
 import com.studying.backendservice.dto.UserDTO;
 import com.studying.backendservice.entities.publicentities.Tennant;
-import com.studying.backendservice.repositories.publicrepos.TennantRepository;
+import com.studying.backendservice.repositories.publicrepos.PublicTennantRepository;
 import com.studying.backendservice.utils.Role;
 import com.studying.backendservice.utils.TennantCreationUtil;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,58 +23,47 @@ import org.springframework.stereotype.Service;
 public class TennantServiceImpl implements TennantService {
 
   private final JdbcTemplate jdbcTemplate;
-  private final TennantRepository tennantRepository;
+  private final PublicTennantRepository publicTennantRepository;
   private final UserServiceImpl userService;
   private final TennantCreationUtil tennantCreationUtil;
   private static final Pattern VALID_NAME = Pattern.compile("^[a-z][a-z0-9_]{2,29}$");
 
   @Autowired
-  public TennantServiceImpl(JdbcTemplate jdbcTemplate, TennantRepository tennantRepository,
+  public TennantServiceImpl(JdbcTemplate jdbcTemplate,
+      PublicTennantRepository publicTennantRepository,
       UserServiceImpl userService, TennantCreationUtil tennantCreationUtil) {
     this.jdbcTemplate = jdbcTemplate;
-    this.tennantRepository = tennantRepository;
+    this.publicTennantRepository = publicTennantRepository;
     this.userService = userService;
     this.tennantCreationUtil = tennantCreationUtil;
   }
 
   @Override
   public List<TennantDTO> getAllTennants() {
-    String previousTenant = TenantContext.getTenantId();
-    TenantContext.setTenantId("public");
-    try {
-      return tennantRepository.findAll().stream()
-          .filter(t -> !t.getName().equals("public"))
-          .map(this::toDto)
-          .toList();
-    } finally {
-      TenantContext.setTenantId(previousTenant);
-    }
+    return publicTennantRepository.findAll().stream()
+        .filter(t -> !t.getName().equals("public"))
+        .map(this::toDto)
+        .toList();
   }
 
   @Override
   public TennantDTO getTennantByName(String name) {
-    String previousTenant = TenantContext.getTenantId();
-    TenantContext.setTenantId("public");
-    try {
-      return tennantRepository.findByName(name)
-          .map(this::toDto)
-          .orElseThrow(() -> new EntityNotFoundException("Tennant not found: " + name));
-    } finally {
-      TenantContext.setTenantId(previousTenant);
-    }
+    return publicTennantRepository.findByName(name)
+        .map(this::toDto)
+        .orElseThrow(() -> new EntityNotFoundException("Tennant not found: " + name));
   }
 
   @Override
   public TennantDTO createTennant(String name, int adminId) throws AccessDeniedException {
-    if (!userService.getCurrentUser().getTennant().equals("public")
-        && userService.getCurrentUser().getTennant() != null) {
+    if (!userService.getPublicCurrentUser().getTennant().equals("public")
+        && userService.getPublicCurrentUser().getTennant() != null) {
       throw new AccessDeniedException("You are not allowed to create tennant");
     }
     validateName(name);
     createSchema(name);
 
     TennantDTO tennantDTO = tennantCreationUtil.savePublicMetadata(name, adminId);
-    UserDTO admin = userService.getUserById(adminId);
+    UserDTO admin = userService.getPublicUserById(adminId);
     admin.setRole(Role.ROLE_ADMIN);
     TenantContext.setTenantId(name);
     try {
@@ -131,16 +120,10 @@ public class TennantServiceImpl implements TennantService {
   @Override
   @Transactional
   public void deleteTennant(int id) {
-    String previousTenant = TenantContext.getTenantId();
-    TenantContext.setTenantId("public");
-    try {
-      Tennant tennant = tennantRepository.findById(id)
-          .orElseThrow(() -> new EntityNotFoundException("Tennant not found"));
-      tennantRepository.deleteById(id);
-      jdbcTemplate.execute("DROP SCHEMA IF EXISTS " + tennant.getName() + " CASCADE");
-    } finally {
-      TenantContext.setTenantId(previousTenant);
-    }
+    Tennant tennant = publicTennantRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Tennant not found"));
+    publicTennantRepository.deleteById(id);
+    jdbcTemplate.execute("DROP SCHEMA IF EXISTS " + tennant.getName() + " CASCADE");
   }
 
   @Override

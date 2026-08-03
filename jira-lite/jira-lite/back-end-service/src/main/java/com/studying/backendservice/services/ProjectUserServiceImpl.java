@@ -5,7 +5,7 @@ import com.studying.backendservice.dto.ProjectUserDTO;
 import com.studying.backendservice.dto.UpdateProjectRolesDTO;
 import com.studying.backendservice.entities.tenantentities.Project;
 import com.studying.backendservice.entities.tenantentities.ProjectUser;
-import com.studying.backendservice.entities.tenantentities.User;
+import com.studying.backendservice.entities.userentity.User;
 import com.studying.backendservice.repositories.tenantrepos.ProjectRepository;
 import com.studying.backendservice.repositories.tenantrepos.ProjectUserRepository;
 import com.studying.backendservice.repositories.tenantrepos.UserRepository;

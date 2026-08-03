@@ -3,7 +3,7 @@ package com.studying.backendservice.services;
 import com.studying.backendservice.dto.CommentDTO;
 import com.studying.backendservice.entities.tenantentities.Comment;
 import com.studying.backendservice.entities.tenantentities.Task;
-import com.studying.backendservice.entities.tenantentities.User;
+import com.studying.backendservice.entities.userentity.User;
 import com.studying.backendservice.repositories.tenantrepos.CommentRepository;
 import com.studying.backendservice.repositories.tenantrepos.TaskRepository;
 import com.studying.backendservice.repositories.tenantrepos.UserRepository;

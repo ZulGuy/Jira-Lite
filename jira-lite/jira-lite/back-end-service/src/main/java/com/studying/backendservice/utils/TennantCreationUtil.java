@@ -3,7 +3,7 @@ package com.studying.backendservice.utils;
 import com.studying.backendservice.dto.TennantDTO;
 import com.studying.backendservice.dto.UserDTO;
 import com.studying.backendservice.entities.publicentities.Tennant;
-import com.studying.backendservice.repositories.publicrepos.TennantRepository;
+import com.studying.backendservice.repositories.publicrepos.PublicTennantRepository;
 import com.studying.backendservice.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +12,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class TennantCreationUtil {
 
-  private final TennantRepository tennantRepository;
+  private final PublicTennantRepository publicTennantRepository;
   private final UserService userService;
 
   @Autowired
-  public TennantCreationUtil(TennantRepository tennantRepository, UserService userService) {
-    this.tennantRepository = tennantRepository;
+  public TennantCreationUtil(PublicTennantRepository publicTennantRepository, UserService userService) {
+    this.publicTennantRepository = publicTennantRepository;
     this.userService = userService;
   }
   @Transactional
   public TennantDTO savePublicMetadata(String name, int adminId) {
     Tennant tennant = new Tennant(name, adminId);
-    TennantDTO tennantDTO = toDto(tennantRepository.save(tennant));
+    TennantDTO tennantDTO = toDto(publicTennantRepository.save(tennant));
     UserDTO admin = userService.getUserById(adminId);
     admin.setTennant(name);
     userService.update(admin);
@@ -40,7 +40,7 @@ public class TennantCreationUtil {
     UserDTO admin = userService.getUserById(adminId);
     admin.setTennant("public");
     userService.update(admin);
-    tennantRepository.deleteById(tennantDTO.getId());
+    publicTennantRepository.deleteById(tennantDTO.getId());
 
   }
 

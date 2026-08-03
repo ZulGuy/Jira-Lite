@@ -1,6 +1,7 @@
 package com.studying.backendservice.entities.tenantentities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.studying.backendservice.entities.userentity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Setter;
 
 @Entity
 @Table(name = "comments")
@@ -23,6 +25,7 @@ public class Comment {
   @JsonBackReference("comment-task")
   private Task task;
 
+  @Setter
   @Column(name = "description", nullable = false)
   private String description;
 
@@ -41,10 +44,6 @@ public class Comment {
 
   public String getDescription() {
     return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
   }
 
   public User getAuthor() {

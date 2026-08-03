@@ -1,5 +1,6 @@
 package com.studying.backendservice.entities.tenantentities;
 
+import com.studying.backendservice.entities.userentity.User;
 import com.studying.backendservice.utils.ProjectRole;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -15,6 +16,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.util.HashSet;
 import java.util.Set;
+import lombok.Setter;
 
 @Entity
 @Table(name = "project_users", uniqueConstraints = {
@@ -34,6 +36,7 @@ public class ProjectUser {
   @JoinColumn(name = "user_id")
   private User user;
 
+  @Setter
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(
       name = "project_user_roles",
@@ -64,9 +67,5 @@ public class ProjectUser {
 
   public Set<ProjectRole> getRoles() {
     return roles;
-  }
-
-  public void setRoles(Set<ProjectRole> roles) {
-    this.roles = roles;
   }
 }

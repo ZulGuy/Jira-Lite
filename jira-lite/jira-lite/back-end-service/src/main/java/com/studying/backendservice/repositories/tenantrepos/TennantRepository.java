@@ -1,4 +1,4 @@
-package com.studying.backendservice.repositories.publicrepos;
+package com.studying.backendservice.repositories.tenantrepos;
 
 import com.studying.backendservice.entities.publicentities.Tennant;
 import java.util.Optional;

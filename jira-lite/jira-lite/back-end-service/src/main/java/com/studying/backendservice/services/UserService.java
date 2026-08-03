@@ -1,7 +1,7 @@
 package com.studying.backendservice.services;
 
 import com.studying.backendservice.dto.UserDTO;
-import com.studying.backendservice.entities.tenantentities.User;
+import com.studying.backendservice.entities.userentity.User;
 import java.util.List;
 
 public interface UserService {

@@ -2,6 +2,7 @@ package com.studying.backendservice.entities.tenantentities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.studying.backendservice.entities.userentity.User;
 import com.studying.backendservice.utils.Status;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,44 +20,61 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "tasks")
 public class Task {
 
+  @Getter
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
+  @Setter
+  @Getter
   @ManyToOne
   @JoinColumn(name = "project_id", nullable = false)
   @JsonBackReference
   private Project project;
 
+  @Setter
+  @Getter
   @Column(name = "summary", nullable = false)
   private String summary;
 
+  @Setter
+  @Getter
   @Column(name = "description", nullable = false)
   private String description;
 
+  @Setter
   @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonManagedReference("comment-task")
   private List<Comment> comments = new ArrayList<Comment>();
 
+  @Setter
+  @Getter
   @ManyToOne
   @JoinColumn(name = "assignee_id")
   private User assignee;
 
+  @Setter
+  @Getter
   @ManyToOne()
   @JoinColumn(name = "initiator_id")
   private User initiator;
 
+  @Setter
+  @Getter
   @Enumerated(EnumType.STRING)
   @Column(name = "status", nullable = false)
   private Status status;
 
 
+  @Getter
   @Column(name = "created_at")
   private final LocalDateTime createdAt = LocalDateTime.now();
 
@@ -73,68 +91,7 @@ public class Task {
     this.status = status;
   }
 
-  public int getId() {
-    return id;
-  }
-
-  public String getSummary() {
-    return summary;
-  }
-
-  public void setSummary(String summary) {
-    this.summary = summary;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
   public Collection<Comment> getComments() {
     return comments;
-  }
-
-  public void setComments(List<Comment> comments) {
-    this.comments = comments;
-  }
-
-
-  public User getAssignee() {
-    return assignee;
-  }
-
-  public void setAssignee(User assignee) {
-    this.assignee = assignee;
-  }
-
-  public User getInitiator() {
-    return initiator;
-  }
-
-  public void setInitiator(User initiator) {
-    this.initiator = initiator;
-  }
-
-  public Status getStatus() {
-    return status;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
-  }
-
-  public Project getProject() {
-    return project;
-  }
-
-  public void setProject(Project project) {
-    this.project = project;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
   }
 }

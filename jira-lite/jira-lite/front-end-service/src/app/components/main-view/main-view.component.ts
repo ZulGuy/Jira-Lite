@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, DragDropModule } from '@angular/cdk/drag-drop';
 import { ProjectService } from '../../services/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +10,7 @@ import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {CreateTaskModalComponent} from "../create-task-modal/create-task-modal.component";
 import Swal from "sweetalert2";
+import {Subscription} from "rxjs";
 
 @Component({
   standalone: true,
@@ -54,7 +55,6 @@ export class MainViewComponent implements OnInit {
     this.currentUserId = this.authService.getCurrentUser()?.id;
   }
 
-
   drop(event: CdkDragDrop<TaskDTO[]>, newStatus: TaskStatus) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -65,7 +65,7 @@ export class MainViewComponent implements OnInit {
     const oldStatus = task.status;
 
     if (newStatus === 'DONE' && oldStatus !== 'IN_PROGRESS') {
-      Swal.fire('Задачу можна завершити лише зі статусу "IN_PROGRESS"');
+      Swal.fire('Задачу можна завершити лише зі статусу "IN PROGRESS"');
       return;
     }
 

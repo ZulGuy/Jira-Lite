@@ -1,7 +1,7 @@
 package com.studying.backendservice.services;
 
 import com.studying.backendservice.entities.tenantentities.PasswordResetToken;
-import com.studying.backendservice.entities.tenantentities.User;
+import com.studying.backendservice.entities.userentity.User;
 import com.studying.backendservice.repositories.tenantrepos.PasswordResetTokenRepository;
 import com.studying.backendservice.repositories.tenantrepos.UserRepository;
 import jakarta.transaction.Transactional;

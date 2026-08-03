@@ -1,4 +1,4 @@
-package com.studying.backendservice.entities.tenantentities;
+package com.studying.backendservice.entities.userentity;
 
 
 import com.studying.backendservice.utils.Role;
@@ -13,6 +13,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Pattern;
 import java.util.Collection;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,24 +23,34 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "users")
 public class User implements UserDetails {
 
+  @Getter
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
+  @Getter
+  @Setter
   @Column(name = "email", unique = true, nullable = false)
   private String email;
 
+  @Setter
   @Column(name = "username", unique = true, nullable = false)
   private String username;
 
+  @Setter
+  @Getter
   @Column(name = "password", nullable = false)
   private String password;
 
+  @Getter
+  @Setter
   @Enumerated(EnumType.STRING)
   @Column(name = "role", nullable = false)
   private Role role;
 
+  @Getter
+  @Setter
   @Column(name = "tenant_name", nullable = false)
   @Pattern(
       regexp = "^[a-zA-Z0-9_]*$",
@@ -60,25 +72,9 @@ public class User implements UserDetails {
   protected User() {
   }
 
-  public int getId() {
-    return id;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return List.of(new SimpleGrantedAuthority("USER"));
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
   }
 
   @Override
@@ -101,32 +97,8 @@ public class User implements UserDetails {
     return UserDetails.super.isCredentialsNonExpired();
   }
 
-  public String getTenant() {
-    return tenant;
-  }
-
-  public void setTenant(String tenant) {
-    this.tenant = tenant;
-  }
-
   @Override
   public boolean isEnabled() { return active; }
 
   public void setEnabled(boolean enabled) { this.active = enabled; }
-
-  public Role getRole() {
-    return role;
-  }
-
-  public void setRole(Role role) {
-    this.role = role;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
 }
