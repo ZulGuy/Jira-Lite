@@ -12,11 +12,13 @@ services:
       db-jira-lite:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -s http://localhost:8080/ -o /dev/null"]
+      test: ["CMD-SHELL", "curl -sf http://localhost:8080/actuator/health | grep -q '\"status\":\"UP\"'"]
       interval: 5s
       timeout: 5s
       retries: 30
       start_period: 15s
+    networks:
+      - app-network
   frontend:
     build:
       context:
@@ -27,6 +29,8 @@ services:
     depends_on:
       backend:
         condition: service_healthy
+    networks:
+      - app-network
   db-jira-lite:
     image: postgres:16-alpine
     container_name: db-jira-lite
@@ -40,5 +44,45 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      - app-network
+  victoria-metrics:
+    image: victoriametrics/victoria-metrics:latest
+    container_name: victoria-metrics
+    ports:
+      - "8428:8428"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - victoria_metrics_data:/victoria-metrics-data
+    command:
+      - "-promscrape.config=/etc/prometheus/prometheus.yml"
+      - "-retentionPeriod=1M"
+    depends_on:
+      backend:
+        condition:
+          service_healthy
+    networks:
+      - app-network
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards/json
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - victoria-metrics
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver:
+      bridge
 volumes:
   postgres_data:
+  victoria_metrics_data:
+  grafana_data:

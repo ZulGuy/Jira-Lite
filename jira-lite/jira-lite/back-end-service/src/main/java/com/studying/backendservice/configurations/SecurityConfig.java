@@ -44,7 +44,8 @@ public class SecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/login", "/api/auth/login", "/api/auth/logout", "/api/auth/register",
-                "/api/auth/reset-password", "/api/auth/forgot-password").permitAll()
+                "/api/auth/reset-password", "/api/auth/forgot-password", "/actuator/health",
+                "/actuator/prometheus").permitAll()
             .anyRequest().authenticated()
         )
         .sessionManagement(session -> session
