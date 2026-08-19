@@ -29,6 +29,8 @@ class BackEndServiceApplicationTests {
     registry.add("spring.datasource.tenant.url", postgres::getJdbcUrl);
     registry.add("spring.datasource.tenant.username", postgres::getUsername);
     registry.add("spring.datasource.tenant.password", postgres::getPassword);
+
+    registry.add("jwt.secret", () -> "test-jwt-secret-for-integration-tests");
   }
 
   @Test
