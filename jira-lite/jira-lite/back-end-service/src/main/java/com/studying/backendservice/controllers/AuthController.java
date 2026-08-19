@@ -8,6 +8,7 @@ import com.studying.backendservice.entities.userentity.User;
 import com.studying.backendservice.services.JwtService;
 import com.studying.backendservice.services.UserService;
 import com.studying.backendservice.utils.Role;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +57,12 @@ public class AuthController {
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
     setTenant("public");
-    String tenant = userService.searchUsers(request.getEmail()).get(0).getTennant();
+    String tenant;
+    try {
+       tenant = userService.searchUsers(request.getEmail()).get(0).getTennant();
+    } catch (IndexOutOfBoundsException e) {
+      throw new EntityNotFoundException(e);
+    }
     setTenant(tenant);
     log.info("request login {}", request.getEmail());
     log.info("TenantContext: {}", TenantContext.getTenantId());
