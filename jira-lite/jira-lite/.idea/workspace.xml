@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d1848bf9-9361-4765-941f-db9d445696ae" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/BackEndServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/BackEndServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end-service/src/test/java/com/studying/backendservice/controllers/AuthControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/test/java/com/studying/backendservice/controllers/AuthControllerTests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DBNavigator.Project.Workspace.Settings">
+    <assistant-settings>
+      <credential-settings>
+        <credentials />
+      </credential-settings>
+      <profile-settings>
+        <profiles />
+      </profile-settings>
+      <mcp-server-settings>
+        <workspace-integration value="false" />
+        <mcp-servers />
+        <mcp-tool-approvals />
+      </mcp-server-settings>
+    </assistant-settings>
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="254" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ZulGuy&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ZulGuy/Jira-Lite.git&quot;,
+    &quot;accountId&quot;: &quot;00ea8aba-0730-4bc9-b408-66b80e47898d&quot;
+  }
+}</component>
+  <component name="HttpClientOnboardingState">{
+  &quot;isOnboardingCommentShown&quot;: true
+}</component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.9317833226909449E-140" />
+      <entry key="MS500" value="1.1407531652565763E-28" />
+      <entry key="S2" value="1.0335530830380165E-7" />
+      <entry key="S5" value="0.0016428490492271198" />
+      <entry key="S10" value="0.04615316595549183" />
+      <entry key="S30" value="0.5621734039717491" />
+      <entry key="S60" value="1.6126991921781308" />
+      <entry key="M2" value="4.336943475061501" />
+      <entry key="M5" value="12.49559777513719" />
+      <entry key="M10" value="23.913769656222787" />
+      <entry key="M15" value="33.34852361965279" />
+      <entry key="M30" value="55.973852407239754" />
+      <entry key="H1" value="90.60608379590525" />
+      <entry key="H2" value="136.85456595933724" />
+      <entry key="H4" value="187.37943540021382" />
+      <entry key="D1" value="502.422101476144" />
+      <entry key="W1" value="786.9444366829467" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="1.000007318604426" />
+      <entry key="MS500" value="1.0939476606587568" />
+      <entry key="S2" value="1.5780861591026003" />
+      <entry key="S5" value="2.1344042683358366" />
+      <entry key="S10" value="2.831926966322442" />
+      <entry key="S30" value="4.776852447794254" />
+      <entry key="S60" value="6.5723666219195955" />
+      <entry key="M2" value="9.57168358645727" />
+      <entry key="M5" value="19.047223978891534" />
+      <entry key="M10" value="31.291038686144738" />
+      <entry key="M15" value="39.650099215807586" />
+      <entry key="M30" value="55.89328772672262" />
+      <entry key="H1" value="82.6448726666825" />
+      <entry key="H2" value="127.47649518780398" />
+      <entry key="H4" value="181.56149347549243" />
+      <entry key="D1" value="373.34204777123483" />
+      <entry key="W1" value="514.0617884017506" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="9.698295953251919E-4" />
+      <entry key="MS500" value="0.2760046575298769" />
+      <entry key="S2" value="1.1273946293985633" />
+      <entry key="S5" value="1.869445738874319" />
+      <entry key="S10" value="2.6922716938054965" />
+      <entry key="S30" value="5.220571616049189" />
+      <entry key="S60" value="8.090905615978361" />
+      <entry key="M2" value="13.823650194897937" />
+      <entry key="M5" value="31.458923063473136" />
+      <entry key="M10" value="55.1262881944409" />
+      <entry key="M15" value="72.9263705968227" />
+      <entry key="M30" value="111.80770564703043" />
+      <entry key="H1" value="173.20267810495912" />
+      <entry key="H2" value="264.293160736967" />
+      <entry key="H4" value="368.91401994701704" />
+      <entry key="D1" value="875.7536694537008" />
+      <entry key="W1" value="1301.0040131992776" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3DLqShmEX2XbByLfioHLAKBfcRq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.AuthControllerTests.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.AuthControllerTests.login_fail_throwsEntityNotFoundException.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.AuthControllerTests.login_success_setsTenantContextAndReturnsJwtCookie.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.SecurityServiceTests.haveAdminAccess_true_returnsTrue.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.java in back-end-service.executor&quot;: &quot;Coverage&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.BackEndServiceApplication.executor&quot;: &quot;Coverage&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Repository/Jira-Lite/jira-lite/jira-lite&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.jshint&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Repository\\Jira-Lite\\jira-lite\\jira-lite\\front-end-service\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Repository\Jira-Lite\jira-lite\jira-lite" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Repository\Jira-Lite\jira-lite\jira-lite\monitoring\grafana\provisioning\dashboards" />
+      <recent name="D:\Repository\Jira-Lite\jira-lite\jira-lite\monitoring\grafana\dashboards" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.BackEndServiceApplication">
+    <configuration name="AuthControllerTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="back-end-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.studying.backendservice.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.studying.backendservice.controllers" />
+      <option name="MAIN_CLASS_NAME" value="com.studying.backendservice.controllers.AuthControllerTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthControllerTests.login_fail_throwsEntityNotFoundException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="back-end-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.studying.backendservice.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.studying.backendservice.controllers" />
+      <option name="MAIN_CLASS_NAME" value="com.studying.backendservice.controllers.AuthControllerTests" />
+      <option name="METHOD_NAME" value="login_fail_throwsEntityNotFoundException" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthControllerTests.login_success_setsTenantContextAndReturnsJwtCookie" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="back-end-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.studying.backendservice.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.studying.backendservice.controllers" />
+      <option name="MAIN_CLASS_NAME" value="com.studying.backendservice.controllers.AuthControllerTests" />
+      <option name="METHOD_NAME" value="login_success_setsTenantContextAndReturnsJwtCookie" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SecurityServiceTests.haveAdminAccess_true_returnsTrue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="back-end-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.studying.backendservice.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.studying.backendservice.services" />
+      <option name="MAIN_CLASS_NAME" value="com.studying.backendservice.services.SecurityServiceTests" />
+      <option name="METHOD_NAME" value="haveAdminAccess_true_returnsTrue" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in back-end-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="back-end-service" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/back-end-service/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BackEndServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="envFilePaths">
+        <option value="$PROJECT_DIR$/environment.env" />
+      </option>
+      <module name="back-end-service" />
+      <selectedOptions>
+        <option name="environmentVariables" />
+      </selectedOptions>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.studying.backendservice.BackEndServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BackEndServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="envFilePaths">
+        <option value="$PROJECT_DIR$/environment.env" />
+      </option>
+      <module name="back-end-service" />
+      <selectedOptions>
+        <option name="environmentVariables" />
+      </selectedOptions>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.studying.backendservice.BackEndServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.java in back-end-service" />
+        <item itemvalue="JUnit.SecurityServiceTests.haveAdminAccess_true_returnsTrue" />
+        <item itemvalue="JUnit.AuthControllerTests" />
+        <item itemvalue="JUnit.AuthControllerTests.login_fail_throwsEntityNotFoundException" />
+        <item itemvalue="JUnit.AuthControllerTests.login_success_setsTenantContextAndReturnsJwtCookie" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-a203e0a19954-intellij.indexing.shared.core-IU-262.10315.125" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-IU-262.10315.125" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d1848bf9-9361-4765-941f-db9d445696ae" name="Changes" comment="" />
+      <created>1778071699353</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1778071699353</updated>
+      <workItem from="1778071700235" duration="2933000" />
+      <workItem from="1778151423820" duration="11966000" />
+      <workItem from="1778255321092" duration="11537000" />
+      <workItem from="1778407180399" duration="2880000" />
+      <workItem from="1778525738836" duration="11377000" />
+      <workItem from="1778690453833" duration="1265000" />
+      <workItem from="1778877214026" duration="4195000" />
+      <workItem from="1778931963475" duration="27000" />
+      <workItem from="1779007129015" duration="7689000" />
+      <workItem from="1779014899520" duration="28070000" />
+      <workItem from="1779266285685" duration="2452000" />
+      <workItem from="1779556092929" duration="1254000" />
+      <workItem from="1779645012973" duration="8805000" />
+      <workItem from="1779949219437" duration="2694000" />
+      <workItem from="1780042647987" duration="3024000" />
+      <workItem from="1785435763065" duration="6337000" />
+      <workItem from="1785499120752" duration="3084000" />
+      <workItem from="1785615389997" duration="3439000" />
+      <workItem from="1785654398683" duration="5254000" />
+      <workItem from="1785665250600" duration="606000" />
+      <workItem from="1785673123824" duration="791000" />
+      <workItem from="1785695704416" duration="6269000" />
+      <workItem from="1785757178955" duration="6626000" />
+      <workItem from="1785876634297" duration="722000" />
+      <workItem from="1785923925922" duration="601000" />
+      <workItem from="1785938782205" duration="4542000" />
+      <workItem from="1786047789092" duration="674000" />
+      <workItem from="1786109700671" duration="4929000" />
+      <workItem from="1786211399004" duration="2449000" />
+      <workItem from="1786259823165" duration="181000" />
+      <workItem from="1786303387266" duration="16927000" />
+      <workItem from="1786462718708" duration="598000" />
+      <workItem from="1787160799389" duration="855000" />
+      <workItem from="1788632792057" duration="3682000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/jira_lite$AuthControllerTests_login_success_setsTenantContextAndReturnsJwtCookie.ic" NAME="AuthControllerTests.login_success_setsTenantContextAndReturnsJwtCookie Coverage Results" MODIFIED="1786381190241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.studying.backendservice.controllers.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/jira_lite$AuthControllerTests_login_fail_throwsEntityNotFoundException.ic" NAME="AuthControllerTests.login_fail_throwsEntityNotFoundException Coverage Results" MODIFIED="1786381800468" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.studying.backendservice.controllers.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/jira_lite$AuthControllerTests.ic" NAME="AuthControllerTests Coverage Results" MODIFIED="1786383278178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.studying.backendservice.controllers.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/jira_lite$java_in_back_end_service.ic" NAME="java in back-end-service Coverage Results" MODIFIED="1786386230187" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/jira_lite$BackEndServiceApplication.ic" NAME="BackEndServiceApplication Coverage Results" MODIFIED="1786380895206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/jira_lite$SecurityServiceTests_haveAdminAccess_true_returnsTrue.ic" NAME="SecurityServiceTests.haveAdminAccess_true_returnsTrue Coverage Results" MODIFIED="1786383976302" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.studying.backendservice.services.*</FILTER>
+    </SUITE>
+  </component>
+</project>

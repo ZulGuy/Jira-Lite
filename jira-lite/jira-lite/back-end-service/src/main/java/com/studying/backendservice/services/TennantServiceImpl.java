@@ -25,17 +25,20 @@ public class TennantServiceImpl implements TennantService {
   private final JdbcTemplate jdbcTemplate;
   private final PublicTennantRepository publicTennantRepository;
   private final UserServiceImpl userService;
+  private final SchemaService schemaService;
   private final TennantCreationUtil tennantCreationUtil;
   private static final Pattern VALID_NAME = Pattern.compile("^[a-z][a-z0-9_]{2,29}$");
 
   @Autowired
   public TennantServiceImpl(JdbcTemplate jdbcTemplate,
       PublicTennantRepository publicTennantRepository,
-      UserServiceImpl userService, TennantCreationUtil tennantCreationUtil) {
+      UserServiceImpl userService, TennantCreationUtil tennantCreationUtil,
+      SchemaService schemaService) {
     this.jdbcTemplate = jdbcTemplate;
     this.publicTennantRepository = publicTennantRepository;
     this.userService = userService;
     this.tennantCreationUtil = tennantCreationUtil;
+    this.schemaService = schemaService;
   }
 
   @Override
@@ -76,6 +79,7 @@ public class TennantServiceImpl implements TennantService {
     } finally {
       TenantContext.setTenantId("public");
     }
+    schemaService.saveSchemas();
     return tennantDTO;
   }
 
@@ -124,6 +128,7 @@ public class TennantServiceImpl implements TennantService {
         .orElseThrow(() -> new EntityNotFoundException("Tennant not found"));
     publicTennantRepository.deleteById(id);
     jdbcTemplate.execute("DROP SCHEMA IF EXISTS " + tennant.getName() + " CASCADE");
+    schemaService.saveSchemas();
   }
 
   @Override

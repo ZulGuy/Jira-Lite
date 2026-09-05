@@ -14,6 +14,7 @@ import com.studying.backendservice.configurations.TenantContext;
 import com.studying.backendservice.dto.UserDTO;
 import com.studying.backendservice.entities.userentity.User;
 import com.studying.backendservice.services.JwtService;
+import com.studying.backendservice.services.SchemaService;
 import com.studying.backendservice.services.UserService;
 import com.studying.backendservice.utils.Role;
 import java.util.List;
@@ -45,12 +46,14 @@ public class AuthControllerTests {
   PasswordEncoder passwordEncoder;
   @Mock
   JdbcTemplate jdbcTemplate;
+  @Mock
+  SchemaService schemaService;
   MockMvc mockMvc;
 
   @BeforeEach
   void setup() {
-    AuthController controller = new AuthController(authenticationManager, jwtService, userService,
-        passwordEncoder, jdbcTemplate);
+    AuthController controller = new AuthController(authenticationManager, jwtService,
+        userService, passwordEncoder, jdbcTemplate, schemaService);
     mockMvc = MockMvcBuilders
         .standaloneSetup(controller)
         .setControllerAdvice(new CommonExceptionHandler())

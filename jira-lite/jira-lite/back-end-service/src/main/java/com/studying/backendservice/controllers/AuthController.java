@@ -6,6 +6,7 @@ import com.studying.backendservice.dto.AuthResponse;
 import com.studying.backendservice.dto.UserDTO;
 import com.studying.backendservice.entities.userentity.User;
 import com.studying.backendservice.services.JwtService;
+import com.studying.backendservice.services.SchemaService;
 import com.studying.backendservice.services.UserService;
 import com.studying.backendservice.utils.Role;
 import jakarta.persistence.EntityNotFoundException;
@@ -40,16 +41,19 @@ public class AuthController {
   private final UserService userService;
   private final PasswordEncoder passwordEncoder;
   private final JdbcTemplate jdbcTemplate;
+  private final SchemaService schemaService;
 
   @Autowired
   public AuthController(
       AuthenticationManager authenticationManager, JwtService jwtService,
-      UserService userService, PasswordEncoder passwordEncoder, JdbcTemplate jdbcTemplate) {
+      UserService userService, PasswordEncoder passwordEncoder,
+      JdbcTemplate jdbcTemplate, SchemaService schemaService) {
     this.authenticationManager = authenticationManager;
     this.jwtService = jwtService;
     this.userService = userService;
     this.passwordEncoder = passwordEncoder;
     this.jdbcTemplate = jdbcTemplate;
+    this.schemaService = schemaService;
   }
 
   @PostMapping(value = "/login",
@@ -160,13 +164,8 @@ public class AuthController {
         .body("Tenant switched to " + TenantContext.getTenantId());
   }
 
-  public List<String> getAllTenantSchemas() {
-    String sql = "SELECT schema_name FROM information_schema.schemata";
-    return jdbcTemplate.queryForList(sql, String.class);
-  }
-
   private void setTenant(String tenant) {
-    for (String schema : getAllTenantSchemas()) {
+    for (String schema : schemaService.getSchemas()) {
       if (tenant.equals(schema) && !(tenant.equals("pg_catalog")
           || tenant.equals("information_schema") || tenant.equals("pg_toast"))) {
         TenantContext.setTenantId(tenant);
