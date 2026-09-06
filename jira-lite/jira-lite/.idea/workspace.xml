@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1848bf9-9361-4765-941f-db9d445696ae" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/BackEndServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/BackEndServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/controllers/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/main/java/com/studying/backendservice/services/TennantServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/back-end-service/src/test/java/com/studying/backendservice/controllers/AuthControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end-service/src/test/java/com/studying/backendservice/controllers/AuthControllerTests.java" afterDir="false" />
-    </list>
+    <list default="true" id="d1848bf9-9361-4765-941f-db9d445696ae" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -332,7 +327,8 @@
       <workItem from="1786303387266" duration="16927000" />
       <workItem from="1786462718708" duration="598000" />
       <workItem from="1787160799389" duration="855000" />
-      <workItem from="1788632792057" duration="3682000" />
+      <workItem from="1788632792057" duration="3987000" />
+      <workItem from="1788689844825" duration="1022000" />
     </task>
     <servers />
   </component>

@@ -27,10 +27,11 @@ public class SchemaServiceImpl implements SchemaService{
   public List<String> getSchemas() {
     List<String> schemas;
     try {
-      Files.readAllLines(SOURCE_TXT);
+      schemas = Files.readAllLines(SOURCE_TXT);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+    return schemas;
   }
 
   @Override
